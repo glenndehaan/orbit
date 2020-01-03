@@ -1,0 +1,79 @@
+{
+  "name": "orbit",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "prestart": "rimraf ./.next",
+    "start": "nodemon --watch app --exec 'npm run lint && node ./app/server.js'",
+    "start:production": "NODE_ENV=production node ./app/server.js",
+    "prebuild": "rimraf ./.next",
+    "build": "next build ./frontend",
+    "lint": "eslint -c ./package.json ./"
+  },
+  "engines": {
+    "node": "^8.0.0"
+  },
+  "author": "Glenn de Haan",
+  "license": "MIT",
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "rules": {
+      "no-console": 0,
+      "react/prop-types": 0,
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "indent": [
+        "error",
+        4
+      ]
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "settings": {
+      "react": {
+        "version": "16.0"
+      }
+    }
+  },
+  "eslintIgnore": [
+    "public/dist"
+  ],
+  "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
+    "babel-eslint": "^10.0.1",
+    "bootstrap": "^4.4.1",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.6.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-react": "^7.16.0",
+    "express": "^4.17.1",
+    "instant-listen": "^0.1.0",
+    "next": "^9.1.4",
+    "node-sass": "^4.13.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "rimraf": "^3.0.0",
+    "simple-node-logger": "^18.12.23",
+    "unistore": "^3.5.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}

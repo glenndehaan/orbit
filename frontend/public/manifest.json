@@ -1,0 +1,27 @@
+{
+  "name": "Orbit",
+  "short_name": "Orbit",
+  "icons": [
+    {
+      "src": "./images/icon/logo_144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "./images/icon/logo_192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./images/icon/logo_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "rotation": "portrait",
+  "background_color": "#3F51B5",
+  "theme_color": "#3F51B5"
+}
