@@ -4,8 +4,7 @@
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
 
-// Imports
-//@import
-//  'variables/colors',
-//  'global/base',
-//  'global/material-icons';
+// Pages
+@import "pages/dashboard";
+@import "pages/login";
+@import "pages/apps";

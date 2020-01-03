@@ -26,7 +26,6 @@ class MyApp extends App {
      */
     render() {
         const {Component, pageProps, router} = this.props;
-        console.log('router', router);
 
         if(router.pathname === "/admin/login") {
             return (

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 
-import '../../scss/pages/login.scss';
+import Logo from '../../components/icons/Logo';
 
 export default class Login extends Component {
     /**
@@ -25,7 +25,7 @@ export default class Login extends Component {
                     <title>Login | Orbit</title>
                     <meta property="og:title" content={`Login | Orbit`}/>
                 </Head>
-                <img className="mb-4" src="/images/icon.png" alt="Orbit Logo" width="72" height="72"/>
+                <Logo height="75px"/>
                 <h1 className="h3 mb-3 font-weight-normal">Orbit</h1>
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
                 <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="" autoFocus=""/>

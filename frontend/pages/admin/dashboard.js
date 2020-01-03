@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
 
-import '../../scss/pages/dashboard.scss';
-
 export default class Dashboard extends Component {
     /**
      * React render function
