@@ -58,6 +58,7 @@
     "@zeit/next-sass": "^1.0.1",
     "babel-eslint": "^10.0.1",
     "bootstrap": "^4.4.1",
+    "chartist": "^0.11.4",
     "cross-env": "^6.0.3",
     "eslint": "^6.6.0",
     "eslint-loader": "^3.0.2",
