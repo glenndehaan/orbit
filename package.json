@@ -1,7 +1,7 @@
 {
   "name": "orbit",
   "version": "0.0.0",
-  "description": "",
+  "description": "A simple telemetry system to monitor your remote applications",
   "scripts": {
     "prestart": "rimraf ./.next",
     "start": "nodemon --watch app --exec 'npm run lint && node ./app/server.js'",

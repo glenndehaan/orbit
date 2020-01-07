@@ -20,17 +20,17 @@ export default class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <meta name="description" content="TODO"/>
+                    <meta name="description" content="A simple telemetry system to monitor your remote applications"/>
 
-                    <meta property="og:description" content="TODO"/>
+                    <meta property="og:description" content="A simple telemetry system to monitor your remote applications"/>
                     <meta property="og:type" content="website"/>
 
                     <link rel="manifest" href="/manifest.json"/>
                     <link rel="shortcut icon" href="/images/favicon.ico"/>
-                    <link rel="apple-touch-icon" href="/images/logo_192x192.png"/>
+                    <link rel="apple-touch-icon" href="/images/icon/logo_192x192.png"/>
 
                     <meta name="mobile-web-app-capable" content="yes"/>
-                    <meta name="theme-color" content="#3F51B5"/>
+                    <meta name="theme-color" content="#343a40"/>
                 </Head>
                 <body>
                     <Main />
