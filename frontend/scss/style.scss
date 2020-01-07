@@ -1,5 +1,5 @@
 // Reset Styling
-@import 'global/normalize';
+@import "global/normalize";
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
@@ -7,7 +7,14 @@
 // Charts
 @import "~chartist/dist/chartist.css";
 
+// Global
+@import "global/global";
+
 // Pages
 @import "pages/dashboard";
 @import "pages/login";
 @import "pages/apps";
+
+// Components
+@import "components/sidenav";
+@import "components/topbar";

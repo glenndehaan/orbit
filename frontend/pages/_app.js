@@ -27,6 +27,16 @@ class MyApp extends App {
     render() {
         const {Component, pageProps, router} = this.props;
 
+        if(router.pathname === "/") {
+            return (
+                <Provider store={store}>
+                    <div id="home">
+                        <Component {...pageProps} />
+                    </div>
+                </Provider>
+            );
+        }
+
         if(router.pathname === "/admin/login") {
             return (
                 <Provider store={store}>
