@@ -1,8 +1,8 @@
 /**
  * Import own packages
  */
-const appCollection = require('../collections/App');
-const settingsCollection = require('../collections/Settings');
+const appCollection = require('../../collections/App');
+const settingsCollection = require('../../collections/Settings');
 
 /**
  * Exports the app data endpoint
