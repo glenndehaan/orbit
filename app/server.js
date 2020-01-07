@@ -12,6 +12,7 @@ const instantListen = require('instant-listen');
 const config = require('./config');
 const mongodb = require('./modules/mongodb');
 const appController = require('./controllers/api/app');
+const userController = require('./controllers/api/user');
 
 /**
  * Define global variables
@@ -98,6 +99,7 @@ server.use((req, res, next) => {
  * Add api endpoints
  */
 server.post('/api/app', appController);
+server.post('/api/user/login', userController.login);
 
 /**
  * Check if Next.JS is ready to handle requests
