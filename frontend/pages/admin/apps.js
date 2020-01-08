@@ -66,7 +66,6 @@ class Apps extends Component {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('data', data);
                 if(data.success) {
                     this.setState({
                         apps: data.apps
