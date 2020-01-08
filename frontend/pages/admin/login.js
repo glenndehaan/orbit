@@ -81,7 +81,8 @@ class Login extends Component {
                     <title>Login | Orbit</title>
                     <meta property="og:title" content={`Login | Orbit`}/>
                 </Head>
-                <Logo height="75px"/>
+                <Logo height="75px"/><br/>
+                <br/>
                 <h1 className="h3 mb-3 font-weight-normal">Orbit</h1>
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
                 <input type="email" id="inputEmail" className={`form-control ${this.state.invalid ? 'is-invalid' : ''}`} placeholder="Email address" required autoFocus ref={(c) => this.username = c}/>
