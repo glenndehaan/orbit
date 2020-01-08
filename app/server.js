@@ -7,14 +7,18 @@ const bodyParser = require('body-parser');
 const instantListen = require('instant-listen');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
+const jwt = require('jsonwebtoken');
 
 /**
  * Import own packages
  */
 const config = require('./config');
 const mongodb = require('./modules/mongodb');
+const settingsCollection = require('./collections/Settings');
 const appController = require('./controllers/api/app');
 const userController = require('./controllers/api/user');
+const tokenController = require('./controllers/api/token');
+const appsController = require('./controllers/api/apps');
 
 /**
  * Define global variables
@@ -111,9 +115,39 @@ server.use((req, res, next) => {
 });
 
 /**
+ * Add api authentication check
+ */
+server.use('/api', async (req, res, next) => {
+    if(req.originalUrl !== "/api/user/login" && req.originalUrl !== "/api/app") {
+        if(typeof req.headers.token === "undefined" || req.headers.token === "") {
+            return res.json({
+                success: false,
+                error: 'Invalid token!'
+            });
+        } else {
+            // Set current app settings
+            const settings = await settingsCollection.findOne({type: '__base'});
+
+            try {
+                jwt.verify(req.headers.token, settings.jwtSecret);
+            } catch(err) {
+                return res.json({
+                    success: false,
+                    error: 'Invalid token!'
+                });
+            }
+        }
+    }
+
+    next();
+});
+
+/**
  * Add api endpoints
  */
 server.post('/api/app', appController);
+server.get('/api/apps', appsController);
+server.get('/api/token', tokenController);
 server.post('/api/user/login', userController.login);
 
 /**
