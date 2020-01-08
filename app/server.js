@@ -5,6 +5,8 @@ const express = require('express');
 const next = require('next');
 const bodyParser = require('body-parser');
 const instantListen = require('instant-listen');
+const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
 
 /**
  * Import own packages
@@ -70,9 +72,22 @@ server.enable('trust proxy');
 server.disable('x-powered-by');
 
 /**
+ * Include express session
+ */
+server.use(session({
+    secret: 'orbit-server',
+    resave: false,
+    saveUninitialized: true,
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    cookie: {secure: false, httpOnly: false}
+}));
+
+/**
  * Configure app to use bodyParser()
  */
-server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.urlencoded({extended: true}));
 server.use(bodyParser.json());
 
 /**
@@ -110,6 +125,29 @@ server.use((req, res, next) => {
     }
 
     res.send(`<html><head><title>Orbit Is Warming Up...</title><style>*{font-family:Verdana,Arial;font-size:20px;font-weight:bold;text-align:center}.text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}@keyframes blink{0%{opacity:0.2}20%{opacity:1}100%{opacity:0.2}}.loading span{font-family:Verdana;font-size:72px;line-height:20px;animation-name:blink;animation-duration:1.4s;animation-iteration-count:infinite;animation-fill-mode:both}.loading span:nth-child(2){animation-delay:0.2s}.loading span:nth-child(3){animation-delay:0.4s}</style></head><body> <main> <span class="text"> Orbit Is Warming Up...<br/>Page will reload when the server is ready<br/> <span class="loading"> <span>.</span> <span>.</span> <span>.</span> </span> </main> <script>setInterval(function(){const xhr=new XMLHttpRequest();xhr.onreadystatechange=()=>{if(xhr.readyState===XMLHttpRequest.DONE){if(xhr.status===200){if(xhr.responseText==='true'){window.location.reload();}}}};xhr.open("GET","/next-ready-check-url",true);xhr.send();},1000);</script> </body></html>`);
+});
+
+/**
+ * Check if a user is logged in
+ */
+server.use((req, res, next) => {
+    const splittedUrl = req.originalUrl.split("/");
+
+    if (splittedUrl[1] && splittedUrl[1] === "admin" && req.originalUrl !== "/admin/login") {
+        if (req.session.userLoggedIn !== true) {
+            return res.redirect(307, '/admin/login');
+        }
+    }
+
+    if(req.originalUrl === "/admin/login") {
+        req.session.userLoggedIn = undefined;
+    }
+
+    if(req.originalUrl === "/admin") {
+        return res.redirect(307, '/admin/dashboard');
+    }
+
+    next();
 });
 
 /**

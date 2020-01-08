@@ -5,6 +5,7 @@
  * @return {null|{}}
  */
 const get = (key) => {
+    if(typeof localStorage === "undefined") return null;
     const state = localStorage.getItem(key);
     if (state === null) return null;
     return JSON.parse(state);
@@ -17,6 +18,7 @@ const get = (key) => {
  * @param {*} state
  */
 const set = (key, state) => {
+    if(typeof localStorage === "undefined") return null;
     localStorage.setItem(key, JSON.stringify(state));
 };
 
@@ -26,6 +28,7 @@ const set = (key, state) => {
  * @param {string} key
  */
 const remove = (key) => {
+    if(typeof localStorage === "undefined") return null;
     localStorage.removeItem(key);
 };
 

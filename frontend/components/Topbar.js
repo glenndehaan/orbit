@@ -20,9 +20,7 @@ export default class Topbar extends Component {
                 </Link>
                 <ul className="navbar-nav px-3">
                     <li className="nav-item text-nowrap">
-                        <Link href="/admin/login">
-                            <a className="nav-link">Sign out</a>
-                        </Link>
+                        <a className="nav-link" href="/admin/login">Sign out</a>
                     </li>
                 </ul>
             </nav>

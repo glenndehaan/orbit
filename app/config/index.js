@@ -16,6 +16,10 @@ const baseConfig = {
     log: {
         level: "info"
     },
+    jwt: {
+        algorithm: "HS512",
+        expiresIn: "24h"
+    },
     login: {
         username: "admin",
         password: "admin@orbit!"

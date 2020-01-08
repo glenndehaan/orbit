@@ -9,7 +9,8 @@ const Schema = mongoose.Schema;
  */
 const SettingsSchema = new Schema({
     type: String,
-    token: String
+    token: String,
+    jwtSecret: String
 }, { versionKey: false, collection: 'settings' });
 
 /**

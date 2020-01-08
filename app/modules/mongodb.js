@@ -39,7 +39,8 @@ class MongoDB {
                         if (await settingsCollection.findOne({type: '__base'}) === null) {
                             const settings = settingsCollection({
                                 type: '__base',
-                                token: uuidv4()
+                                token: uuidv4(),
+                                jwtSecret: uuidv4()
                             });
 
                             await settings.save();
