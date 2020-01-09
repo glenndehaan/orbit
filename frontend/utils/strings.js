@@ -12,7 +12,7 @@ const timeSince = (date) => {
         return {
             number: interval,
             type: "year",
-            text: interval + " years ago"
+            text: interval + " year(s) ago"
         };
     }
     interval = Math.floor(seconds / 2592000);
@@ -21,7 +21,7 @@ const timeSince = (date) => {
         return {
             number: interval,
             type: "month",
-            text: interval + " months ago"
+            text: interval + " month(s) ago"
         };
     }
     interval = Math.floor(seconds / 86400);
@@ -30,7 +30,7 @@ const timeSince = (date) => {
         return {
             number: interval,
             type: "day",
-            text: interval + " days ago"
+            text: interval + " day(s) ago"
         };
     }
     interval = Math.floor(seconds / 3600);
@@ -39,7 +39,7 @@ const timeSince = (date) => {
         return {
             number: interval,
             type: "hour",
-            text: interval + " hours ago"
+            text: interval + " hour(s) ago"
         };
     }
     interval = Math.floor(seconds / 60);
@@ -48,14 +48,14 @@ const timeSince = (date) => {
         return {
             number: interval,
             type: "minute",
-            text: interval + " minutes ago"
+            text: interval + " minute(s) ago"
         };
     }
 
     return {
         number: seconds,
         type: "second",
-        text: seconds + " seconds ago"
+        text: seconds + " second(s) ago"
     };
 };
 

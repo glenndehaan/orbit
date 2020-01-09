@@ -11,8 +11,12 @@
   z-index: 0;
 }
 
+.modal-dialog {
+  max-width: calc(100% - 200px);
+}
+
 .modal-body {
-  max-height: 400px;
+  height: calc(100vh - 170px);
   overflow-x: hidden;
   overflow-y: auto;
 }

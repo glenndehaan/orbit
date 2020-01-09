@@ -2,6 +2,33 @@ import React, {Component} from 'react';
 
 export default class Modal extends Component {
     /**
+     * Runs then component mounts
+     */
+    componentDidMount() {
+        document.body.addEventListener('keyup', this.keypress);
+    }
+
+    /**
+     * Runs then components unmounts
+     */
+    componentWillUnmount() {
+        document.body.removeEventListener('keyup', this.keypress);
+    }
+
+    /**
+     * Handles a keypress
+     *
+     * @param e
+     */
+    keypress = (e) => {
+        if (this.props.close) {
+            if (e.key === "Escape") {
+                this.props.close();
+            }
+        }
+    };
+
+    /**
      * React render function
      *
      * @returns {*}

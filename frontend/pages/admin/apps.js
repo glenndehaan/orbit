@@ -124,11 +124,98 @@ class Apps extends Component {
                     <Modal title={`App: ${this.state.modalApp.project} (${this.state.modalApp.os.hostname})`} close={() => this.closeModal()}>
                         <div className="row">
                             <div className="col-sm">
-                                10 discovered apps
+                                App data here
                             </div>
                             <div className="col-sm">
-                                2 discovered servers
+                                <h3>System</h3>
+                                <div className="table-responsive">
+                                    <table className="table table-striped table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>Type</td>
+                                                <td>{this.state.modalApp.os.type}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Platform</td>
+                                                <td>{this.state.modalApp.os.platform}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Release</td>
+                                                <td>{this.state.modalApp.os.release}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Architecture</td>
+                                                <td>{this.state.modalApp.os.arch}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Processor</td>
+                                                <td>{this.state.modalApp.os.cpus[0].model}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Free Memory</td>
+                                                <td>{this.state.modalApp.os.freemem} B</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Memory</td>
+                                                <td>{this.state.modalApp.os.totalmem} B</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Uptime</td>
+                                                <td>{this.state.modalApp.os.uptime}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h3>Network</h3>
+                                <div className="table-responsive">
+                                    <table className="table table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Interface</th>
+                                                <th>CIDR</th>
+                                                <th>MAC</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {Object.keys(this.state.modalApp.os.networkInterfaces).map((key) => {
+                                                const cidrs = this.state.modalApp.os.networkInterfaces[key].map((network) => {
+                                                    return network.cidr;
+                                                });
+                                                const macs = this.state.modalApp.os.networkInterfaces[key].map((network) => {
+                                                    return network.mac;
+                                                });
+
+                                                return (
+                                                    <tr key={key}>
+                                                        <td>{key}</td>
+                                                        <td>{cidrs.join(', ')}</td>
+                                                        <td>{macs.join(', ')}</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                        </div>
+                        <h3>Environment (Process)</h3>
+                        <div className="table-responsive">
+                            <table className="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Key</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Object.keys(this.state.modalApp.process.env).map((key) => (
+                                        <tr key={key}>
+                                            <td>{key}</td>
+                                            <td>{this.state.modalApp.process.env[key]}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     </Modal>
                 }
