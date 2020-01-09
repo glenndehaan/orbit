@@ -3,6 +3,7 @@ import Head from 'next/head';
 import {connect} from 'unistore/react';
 
 import Settings from '../../components/icons/Settings';
+import Modal from '../../components/Modal';
 
 import strings from '../../utils/strings';
 
@@ -15,7 +16,12 @@ class Apps extends Component {
 
         this.state = {
             token: '[token]',
-            apps: []
+            apps: [],
+            modalOpen: false,
+            modalApp: {
+                os: {},
+                process: {}
+            }
         };
     }
 
@@ -78,6 +84,31 @@ class Apps extends Component {
     }
 
     /**
+     * Opens the modal
+     *
+     * @param app
+     */
+    openModal(app) {
+        this.setState({
+            modalOpen: true,
+            modalApp: app
+        });
+    }
+
+    /**
+     * Closes the modal
+     */
+    closeModal() {
+        this.setState({
+            modalOpen: false,
+            modalApp: {
+                os: {},
+                process: {}
+            }
+        });
+    }
+
+    /**
      * React render function
      *
      * @returns {*}
@@ -89,6 +120,11 @@ class Apps extends Component {
                     <title>Apps | Orbit</title>
                     <meta property="og:title" content={`Apps | Orbit`}/>
                 </Head>
+                {this.state.modalOpen &&
+                    <Modal title={`App: ${this.state.modalApp.project} (${this.state.modalApp.os.hostname})`} close={() => this.closeModal()}>
+                        Hoi
+                    </Modal>
+                }
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 className="h2">Apps</h1>
                     <div className="btn-toolbar mb-2 mb-md-0">
@@ -125,7 +161,7 @@ class Apps extends Component {
                                         <td>10.10.288.2 [Placeholder]</td>
                                         <td>{app.client}</td>
                                         <td>{strings.timeSince(Math.round(app.updated)).text}</td>
-                                        <td><Settings height="20px" color="grey"/></td>
+                                        <td><Settings height="20px" onClick={() => this.openModal(app)}/></td>
                                     </tr>
                                 )
                             })}
