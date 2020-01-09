@@ -122,7 +122,14 @@ class Apps extends Component {
                 </Head>
                 {this.state.modalOpen &&
                     <Modal title={`App: ${this.state.modalApp.project} (${this.state.modalApp.os.hostname})`} close={() => this.closeModal()}>
-                        Hoi
+                        <div className="row">
+                            <div className="col-sm">
+                                10 discovered apps
+                            </div>
+                            <div className="col-sm">
+                                2 discovered servers
+                            </div>
+                        </div>
                     </Modal>
                 }
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
