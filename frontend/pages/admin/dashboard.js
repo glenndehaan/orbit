@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import {connect} from 'unistore/react';
 import Chartist from 'chartist';
 
@@ -137,6 +138,9 @@ class Dashboard extends Component {
                                 </tbody>
                             </table>
                         </div>
+                        <Link href="/admin/apps">
+                            <a>More</a>
+                        </Link>
                     </div>
                     <div className="col-sm">
                         <div className="col-sm">
@@ -163,6 +167,9 @@ class Dashboard extends Component {
                                     </tbody>
                                 </table>
                             </div>
+                            <Link href="/admin/apps">
+                                <a>More</a>
+                            </Link>
                         </div>
                     </div>
                 </div>
