@@ -19,6 +19,7 @@ const appController = require('./controllers/api/app');
 const userController = require('./controllers/api/user');
 const tokenController = require('./controllers/api/token');
 const appsController = require('./controllers/api/apps');
+const dashboardController = require('./controllers/api/dashboard');
 
 /**
  * Define global variables
@@ -147,6 +148,7 @@ server.use('/api', async (req, res, next) => {
  */
 server.post('/api/app', appController);
 server.get('/api/apps', appsController);
+server.get('/api/dashboard', dashboardController);
 server.get('/api/token', tokenController);
 server.post('/api/user/login', userController.login);
 

@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
+import {connect} from 'unistore/react';
 import Chartist from 'chartist';
 
-export default class Dashboard extends Component {
+import strings from '../../utils/strings';
+
+class Dashboard extends Component {
     /**
      * Constructor
      */
@@ -10,20 +13,63 @@ export default class Dashboard extends Component {
         super();
 
         this.onlineOfflineChart = null;
+        this.state = {
+            data: {
+                topDiscovered: [],
+                topOffline: [],
+                totalOnline: 0,
+                totalOffline: 0,
+                totalApps: 0
+            }
+        };
     }
 
+    /**
+     * Runs then component mounts
+     */
     componentDidMount() {
-        const data = {
-            series: [5, 3, 4]
-        };
+        this.getDashboardData(() => {
+            const data = {
+                series: [this.state.data.totalOnline, this.state.data.totalOffline]
+            };
 
-        const sum = function(a, b) { return a + b };
-
-        new Chartist.Pie(this.onlineOfflineChart, data, {
-            labelInterpolationFnc: function(value) {
-                return Math.round(value / data.series.reduce(sum) * 100) + '%';
-            }
+            new Chartist.Pie(this.onlineOfflineChart, data, {
+                labelInterpolationFnc: function(value) {
+                    return Math.round(value / data.series.reduce(strings.sum) * 100) + '%';
+                }
+            });
         });
+    }
+
+    /**
+     * Get all dashboard data
+     *
+     * @param completed
+     */
+    getDashboardData(completed) {
+        fetch('/api/dashboard', {
+            credentials: 'same-origin',
+            method: 'GET',
+            headers: {
+                'token': this.props.user.token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if(data.success) {
+                    this.setState({
+                        data: data
+                    });
+
+                    completed();
+                }
+            })
+            .catch((error) => {
+                completed();
+
+                console.error('Error:', error);
+            });
     }
 
     /**
@@ -32,6 +78,7 @@ export default class Dashboard extends Component {
      * @returns {*}
      */
     render() {
+        console.log('this.state.data', this.state.data);
         return (
             <main className="col-md-10 ml-sm-auto px-4">
                 <Head>
@@ -40,33 +87,81 @@ export default class Dashboard extends Component {
                 </Head>
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 className="h2">Dashboard</h1>
-                    <div className="btn-toolbar mb-2 mb-md-0">
-                        <div className="btn-group mr-2">
-                            <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-                        </div>
-                    </div>
                 </div>
                 <div className="row">
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                10 discovered apps
+                                {this.state.data.totalApps} discovered apps
                             </div>
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                2 discovered servers
+                                [placeholder] discovered servers
                             </div>
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                5 apps online / 5 apps offline
+                                {this.state.data.totalOnline} apps online / {this.state.data.totalOffline} apps offline
                                 <div ref={(c) => this.onlineOfflineChart = c}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm">
+                        <h4>Recent Discovered/Recovered Apps</h4>
+                        <div className="table-responsive">
+                            <table className="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Server</th>
+                                        <th>IP</th>
+                                        <th>Last Seen</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.data.topDiscovered.map((app, key) => (
+                                        <tr key={key}>
+                                            <td>{app.project}</td>
+                                            <td>{app.os.hostname}</td>
+                                            <td>{app.public.ip} ({app.public.country_code})</td>
+                                            <td>{strings.timeSince(Math.round(app.updated)).text}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div className="col-sm">
+                        <div className="col-sm">
+                            <h4>Offline Apps</h4>
+                            <div className="table-responsive">
+                                <table className="table table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Server</th>
+                                            <th>IP</th>
+                                            <th>Last Seen</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.data.topOffline.map((app, key) => (
+                                            <tr key={key}>
+                                                <td>{app.project}</td>
+                                                <td>{app.os.hostname}</td>
+                                                <td>{app.public.ip} ({app.public.country_code})</td>
+                                                <td>{strings.timeSince(Math.round(app.updated)).text}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -75,3 +170,8 @@ export default class Dashboard extends Component {
         );
     }
 }
+
+/**
+ * Connect the store to the component
+ */
+export default connect('user')(Dashboard);

@@ -5,7 +5,7 @@
  * @return {{number: *, text: string, type: string}}
  */
 const timeSince = (date) => {
-    const seconds = Math.floor((new Date() - date) / 1000);
+    const seconds = Math.floor((new Date().getTime() - date) / 1000);
     let interval = Math.floor(seconds / 31536000);
 
     if (interval > 1) {
@@ -103,6 +103,17 @@ const secondsToTime = (second) => {
 };
 
 /**
+ * Sum
+ *
+ * @param a
+ * @param b
+ * @return {*}
+ */
+const sum = (a, b) => {
+    return a + b
+};
+
+/**
  * Export string utils
  */
-export default {timeSince, formatBytes, secondsToTime};
+export default {timeSince, formatBytes, secondsToTime, sum};
