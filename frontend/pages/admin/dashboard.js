@@ -79,7 +79,6 @@ class Dashboard extends Component {
      * @returns {*}
      */
     render() {
-        console.log('this.state.data', this.state.data);
         return (
             <main className="col-md-10 ml-sm-auto px-4">
                 <Head>
