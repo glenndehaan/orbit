@@ -114,6 +114,7 @@ class Apps extends Component {
      * @returns {*}
      */
     render() {
+        console.log('this.state.modalApp', this.state.modalApp);
         return (
             <main className="col-md-10 ml-sm-auto px-4">
                 <Head>
@@ -124,7 +125,49 @@ class Apps extends Component {
                     <Modal title={`App: ${this.state.modalApp.project} (${this.state.modalApp.os.hostname})`} close={() => this.closeModal()}>
                         <div className="row">
                             <div className="col-sm">
-                                App data here
+                                <h3>App</h3>
+                                <div className="table-responsive">
+                                    <table className="table table-striped table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>Project</td>
+                                                <td>{this.state.modalApp.project}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Environment</td>
+                                                <td>{this.state.modalApp.env}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Orbit Client</td>
+                                                <td>{this.state.modalApp.client}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>UID</td>
+                                                <td>{this.state.modalApp.process.uid}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>PID</td>
+                                                <td>{this.state.modalApp.process.pid}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Current Working Directory (cwd)</td>
+                                                <td>{this.state.modalApp.process.cwd}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Architecture</td>
+                                                <td>{this.state.modalApp.process.arch}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Argument Vector</td>
+                                                <td>{this.state.modalApp.process.argv.join(', ')}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Uptime</td>
+                                                <td>{strings.secondsToTime(this.state.modalApp.process.uptime)} ({this.state.modalApp.process.uptime})</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div className="col-sm">
                                 <h3>System</h3>
@@ -153,15 +196,15 @@ class Apps extends Component {
                                             </tr>
                                             <tr>
                                                 <td>Free Memory</td>
-                                                <td>{this.state.modalApp.os.freemem} B</td>
+                                                <td>{strings.formatBytes(this.state.modalApp.os.freemem)}</td>
                                             </tr>
                                             <tr>
                                                 <td>Total Memory</td>
-                                                <td>{this.state.modalApp.os.totalmem} B</td>
+                                                <td>{strings.formatBytes(this.state.modalApp.os.totalmem)}</td>
                                             </tr>
                                             <tr>
                                                 <td>Uptime</td>
-                                                <td>{this.state.modalApp.os.uptime}</td>
+                                                <td>{strings.secondsToTime(this.state.modalApp.os.uptime)} ({this.state.modalApp.os.uptime})</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -198,7 +241,7 @@ class Apps extends Component {
                                 </div>
                             </div>
                         </div>
-                        <h3>Environment (Process)</h3>
+                        <h3>App Environment</h3>
                         <div className="table-responsive">
                             <table className="table table-striped table-sm">
                                 <thead>
