@@ -10,6 +10,7 @@ const Schema = mongoose.Schema;
 const AppSchema = new Schema({
     os: 'Mixed',
     process: 'Mixed',
+    public: 'Mixed',
     id: String,
     project: String,
     env: String,

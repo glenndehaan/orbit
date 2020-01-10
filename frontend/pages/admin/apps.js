@@ -20,7 +20,8 @@ class Apps extends Component {
             modalOpen: false,
             modalApp: {
                 os: {},
-                process: {}
+                process: {},
+                public: {}
             }
         };
     }
@@ -103,7 +104,8 @@ class Apps extends Component {
             modalOpen: false,
             modalApp: {
                 os: {},
-                process: {}
+                process: {},
+                public: {}
             }
         });
     }
@@ -164,6 +166,21 @@ class Apps extends Component {
                                             <tr>
                                                 <td>Uptime</td>
                                                 <td>{strings.secondsToTime(this.state.modalApp.process.uptime)} ({this.state.modalApp.process.uptime})</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h3>Network</h3>
+                                <div className="table-responsive">
+                                    <table className="table table-striped table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>Public IP</td>
+                                                <td>{this.state.modalApp.public.ip}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Country Code</td>
+                                                <td>{this.state.modalApp.public.country_code}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -295,7 +312,7 @@ class Apps extends Component {
                                         <td><span className={`dot ${offline ? 'bg-danger' : 'bg-success'}`}/>{offline ? 'Offline' : 'Online'}</td>
                                         <td>{app.project}</td>
                                         <td>{app.os.hostname}</td>
-                                        <td>10.10.288.2 [Placeholder]</td>
+                                        <td>{app.public.ip} ({app.public.country_code})</td>
                                         <td>{app.client}</td>
                                         <td>{strings.timeSince(Math.round(app.updated)).text}</td>
                                         <td><Settings height="20px" onClick={() => this.openModal(app)}/></td>
