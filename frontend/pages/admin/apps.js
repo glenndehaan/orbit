@@ -116,7 +116,6 @@ class Apps extends Component {
      * @returns {*}
      */
     render() {
-        console.log('this.state.modalApp', this.state.modalApp);
         return (
             <main className="col-md-10 ml-sm-auto px-4">
                 <Head>
@@ -330,4 +329,4 @@ class Apps extends Component {
 /**
  * Connect the store to the component
  */
-export default connect('user,server')(Apps);
+export default connect('user')(Apps);
