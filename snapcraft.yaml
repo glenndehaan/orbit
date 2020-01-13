@@ -1,13 +1,21 @@
+# Basic snap definition
 name: orbit
 version: git
 summary: A simple telemetry system to monitor your remote applications
 description: A simple telemetry system to monitor your remote applications
 
+# Snap state
 confinement: strict
 grade: stable
 
+# Snap base image
 base: core18
 
+# Snap architectures
+architectures:
+  - build-on: amd64
+
+# Define snap build parts
 parts:
   node:
     plugin: dump
@@ -16,7 +24,6 @@ parts:
       - bin
       - include
       - lib
-
   orbit:
     after: [node]
     plugin: nil
@@ -31,6 +38,7 @@ parts:
       - g++
       - make
 
+# Define all snap commands/services
 apps:
   orbit:
     command: bin/node $SNAP/app/bundle.js
