@@ -20,6 +20,7 @@ const userController = require('./controllers/api/user');
 const tokenController = require('./controllers/api/token');
 const appsController = require('./controllers/api/apps');
 const dashboardController = require('./controllers/api/dashboard');
+const ipsController = require('./controllers/api/ips');
 
 /**
  * Define global variables
@@ -148,6 +149,7 @@ server.use('/api', async (req, res, next) => {
  */
 server.post('/api/app', appController);
 server.get('/api/apps', appsController);
+server.get('/api/ips', ipsController);
 server.get('/api/dashboard', dashboardController);
 server.get('/api/token', tokenController);
 server.post('/api/user/login', userController.login);
@@ -195,10 +197,10 @@ server.use(handler);
  * Start server on specific port
  */
 mongodb.init().then(() => {
-    server.listen(3000, "0.0.0.0", err => {
+    server.listen(43001, "0.0.0.0", err => {
         if (err) throw err;
         handler.init();
-        global.log.info(`[ORBIT] Service started with success! App running at: 0.0.0.0:3000`);
+        global.log.info(`[ORBIT] Service started with success! App running at: 0.0.0.0:43001`);
         global.log.info(`[ORBIT] Support and Help: https://github.com/glenndehaan/orbit`);
     });
 });

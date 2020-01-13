@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import {connect} from 'unistore/react';
-import Chartist from 'chartist';
+// import Chartist from 'chartist';
 
 import strings from '../../utils/strings';
 
@@ -17,10 +17,12 @@ class Dashboard extends Component {
         this.state = {
             data: {
                 topDiscovered: [],
+                topDiscoveredIps: [],
                 topOffline: [],
                 totalOnline: 0,
                 totalOffline: 0,
-                totalApps: 0
+                totalApps: 0,
+                totalServers: 0
             }
         };
     }
@@ -30,15 +32,15 @@ class Dashboard extends Component {
      */
     componentDidMount() {
         this.getDashboardData(() => {
-            const data = {
-                series: [this.state.data.totalOnline, this.state.data.totalOffline]
-            };
-
-            new Chartist.Pie(this.onlineOfflineChart, data, {
-                labelInterpolationFnc: function(value) {
-                    return Math.round(value / data.series.reduce(strings.sum) * 100) + '%';
-                }
-            });
+            // const data = {
+            //     series: [this.state.data.totalOnline, this.state.data.totalOffline]
+            // };
+            //
+            // new Chartist.Pie(this.onlineOfflineChart, data, {
+            //     labelInterpolationFnc: function(value) {
+            //         return Math.round(value / data.series.reduce(strings.sum) * 100) + '%';
+            //     }
+            // });
         });
     }
 
@@ -99,7 +101,7 @@ class Dashboard extends Component {
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                [placeholder] discovered servers
+                                {this.state.data.totalServers} discovered servers
                             </div>
                         </div>
                     </div>
@@ -170,6 +172,32 @@ class Dashboard extends Component {
                                 <a>More</a>
                             </Link>
                         </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm">
+                        <h4>Recent Discovered IP&apos;s</h4>
+                        <div className="table-responsive">
+                            <table className="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>IP</th>
+                                        <th>Country Code</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.data.topDiscoveredIps.map((app, key) => (
+                                        <tr key={key}>
+                                            <td>{app.public.ip} ({app.os.hostname})</td>
+                                            <td>{app.public.country_code}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <Link href="/admin/ips">
+                            <a>More</a>
+                        </Link>
                     </div>
                 </div>
             </main>

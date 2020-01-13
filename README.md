@@ -16,7 +16,7 @@ A simple telemetry system to monitor your remote applications
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/orbit)
 
-- Open up a browser and go to http://127.0.0.1:3000
+- Open up a browser and go to http://127.0.0.1:43001
 
 ## Config
 The default snap config can be found here:

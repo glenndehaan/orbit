@@ -52,7 +52,7 @@
     }
   },
   "eslintIgnore": [
-    "public/dist"
+    "_next"
   ],
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",

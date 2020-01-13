@@ -2,6 +2,7 @@
  * Import own packages
  */
 const appCollection = require('../../collections/App');
+const serverCollection = require('../../collections/Server');
 
 /**
  * Returns all dashboard data
@@ -16,6 +17,7 @@ module.exports = async (req, res) => {
 
     // Counters
     const totalApps = await appCollection.countDocuments();
+    const totalServers = await serverCollection.countDocuments();
     const totalOnline = await appCollection.countDocuments({
         updated: {
             $gt: offlineEpoch.getTime()
@@ -32,7 +34,19 @@ module.exports = async (req, res) => {
         updated: {
             $gt: offlineEpoch.getTime()
         }
-    }, {}, {
+    }, {
+        _id: 0
+    }, {
+        limit: 3,
+        sort: {
+            'process.uptime': -1
+        }
+    });
+    const topDiscoveredIps = await appCollection.find({}, {
+        _id: 0,
+        public: 1,
+        'os.hostname': 1
+    }, {
         limit: 3,
         sort: {
             'process.uptime': -1
@@ -42,7 +56,9 @@ module.exports = async (req, res) => {
         updated: {
             $lt: offlineEpoch.getTime()
         }
-    }, {}, {
+    }, {
+        _id: 0
+    }, {
         limit: 3,
         sort: {
             'process.uptime': -1
@@ -52,9 +68,11 @@ module.exports = async (req, res) => {
     res.json({
         success: true,
         topDiscovered,
+        topDiscoveredIps,
         topOffline,
         totalOnline,
         totalOffline,
-        totalApps
+        totalApps,
+        totalServers
     });
 };

@@ -3,6 +3,7 @@ name: orbit
 version: git
 summary: A simple telemetry system to monitor your remote applications
 description: A simple telemetry system to monitor your remote applications
+license: MIT
 
 # Snap state
 confinement: strict

@@ -2,6 +2,7 @@
  * Import own packages
  */
 const appCollection = require('../../collections/App');
+const serverCollection = require('../../collections/Server');
 const settingsCollection = require('../../collections/Settings');
 
 /**
@@ -12,7 +13,7 @@ const settingsCollection = require('../../collections/Settings');
  */
 module.exports = async (req, res) => {
     // Check if the bearer is oke
-    if(typeof req.headers.bearer === "undefined" || req.headers.bearer === '') {
+    if (typeof req.headers.bearer === "undefined" || req.headers.bearer === '') {
         global.log.error('[ORBIT] Api missing headers!');
 
         return res.json({
@@ -22,7 +23,7 @@ module.exports = async (req, res) => {
 
     const settings = await settingsCollection.findOne({type: '__base'});
 
-    if(settings === null || settings.token !== req.headers.bearer) {
+    if (settings === null || settings.token !== req.headers.bearer) {
         global.log.error('[ORBIT] Incorrect token!');
 
         return res.json({
@@ -31,7 +32,7 @@ module.exports = async (req, res) => {
     }
 
     // Check if body is oke
-    if(typeof req.body.id === "undefined" || req.body.id === '') {
+    if (typeof req.body.id === "undefined" || req.body.id === '') {
         global.log.error('[ORBIT] Incorrect body!');
 
         return res.json({
@@ -42,7 +43,7 @@ module.exports = async (req, res) => {
     // Check if an entry already exists
     const appCheck = await appCollection.findOne({id: req.body.id});
 
-    if(appCheck === null) {
+    if (appCheck === null) {
         // Store the data in mongo
         const app = new appCollection(req.body);
         await app.save();
@@ -55,6 +56,19 @@ module.exports = async (req, res) => {
         }, req.body);
 
         global.log.info(`[ORBIT] Update app (ID: ${req.body.id})`);
+    }
+
+    // Check if an entry already exists
+    const serverCheck = await serverCollection.findOne({hostname: req.body.os.hostname});
+
+    if (serverCheck === null) {
+        // Store the data in mongo
+        const server = new serverCollection({
+            hostname: req.body.os.hostname
+        });
+        await server.save();
+
+        global.log.info(`[ORBIT] New server created (Hostname: ${req.body.os.hostname})`);
     }
 
     // Send correct response
