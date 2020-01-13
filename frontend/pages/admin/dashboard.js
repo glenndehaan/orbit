@@ -94,21 +94,21 @@ class Dashboard extends Component {
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                {this.state.data.totalApps} discovered apps
+                                {this.state.data.totalApps} discovered app(s)
                             </div>
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                {this.state.data.totalServers} discovered servers
+                                {this.state.data.totalServers} discovered server(s)
                             </div>
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                {this.state.data.totalOnline} apps online / {this.state.data.totalOffline} apps offline
+                                {this.state.data.totalOnline} app(s) online / {this.state.data.totalOffline} app(s) offline
                                 <div ref={(c) => this.onlineOfflineChart = c}/>
                             </div>
                         </div>
