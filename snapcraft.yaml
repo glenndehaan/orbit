@@ -1,0 +1,16 @@
+name: orbit
+version: git
+summary: A simple telemetry system to monitor your remote applications
+description: A simple telemetry system to monitor your remote applications
+confinement: devmode
+base: core18
+parts:
+  orbit:
+    plugin: nodejs
+    source: .
+    nodejs-package-manager: npm
+    nodejs-version: "8.17.0"
+
+apps:
+  orbit:
+    command: orbit
