@@ -21,6 +21,7 @@ const tokenController = require('./controllers/api/token');
 const appsController = require('./controllers/api/apps');
 const dashboardController = require('./controllers/api/dashboard');
 const ipsController = require('./controllers/api/ips');
+const serversController = require('./controllers/api/servers');
 
 /**
  * Define global variables
@@ -150,6 +151,7 @@ server.use('/api', async (req, res, next) => {
 server.post('/api/app', appController);
 server.get('/api/apps', appsController);
 server.get('/api/ips', ipsController);
+server.get('/api/servers', serversController);
 server.get('/api/dashboard', dashboardController);
 server.get('/api/token', tokenController);
 server.post('/api/user/login', userController.login);

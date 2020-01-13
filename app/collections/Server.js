@@ -8,7 +8,8 @@ const Schema = mongoose.Schema;
  * Create the Server collection
  */
 const ServerSchema = new Schema({
-    hostname: String
+    hostname: String,
+    discovered: Number
 }, { versionKey: false, collection: 'server' });
 
 /**

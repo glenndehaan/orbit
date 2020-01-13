@@ -64,7 +64,8 @@ module.exports = async (req, res) => {
     if (serverCheck === null) {
         // Store the data in mongo
         const server = new serverCollection({
-            hostname: req.body.os.hostname
+            hostname: req.body.os.hostname,
+            discovered: new Date().getTime()
         });
         await server.save();
 
