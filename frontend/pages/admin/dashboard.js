@@ -17,6 +17,7 @@ class Dashboard extends Component {
 
         this.onlineOfflineChart = null;
         this.state = {
+            dataFetched: false,
             data: {
                 topDiscovered: [],
                 topDiscoveredIps: [],
@@ -64,6 +65,7 @@ class Dashboard extends Component {
             .then((data) => {
                 if(data.success) {
                     this.setState({
+                        dataFetched: true,
                         data: data
                     });
 
@@ -84,7 +86,7 @@ class Dashboard extends Component {
      */
     render() {
         // Check if app is clean installed
-        if(this.state.data.totalApps < 1) {
+        if(this.state.dataFetched && this.state.data.totalApps < 1) {
             return (
                 <main className="col-md-10 ml-sm-auto px-4">
                     <Head>

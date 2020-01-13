@@ -17,6 +17,7 @@ class Apps extends Component {
 
         this.state = {
             token: '[token]',
+            dataFetched: false,
             apps: [],
             modalOpen: false,
             modalApp: {
@@ -76,6 +77,7 @@ class Apps extends Component {
             .then((data) => {
                 if(data.success) {
                     this.setState({
+                        dataFetched: true,
                         apps: data.apps
                     });
                 }
@@ -118,7 +120,7 @@ class Apps extends Component {
      */
     render() {
         // Check if app is clean installed
-        if(this.state.apps.length < 1) {
+        if(this.state.dataFetched && this.state.apps.length < 1) {
             return (
                 <main className="col-md-10 ml-sm-auto px-4">
                     <Head>

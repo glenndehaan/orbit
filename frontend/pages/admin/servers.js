@@ -16,6 +16,7 @@ class Servers extends Component {
         super();
 
         this.state = {
+            dataFetched: false,
             servers: [],
             modalOpen: false,
             modalServer: {
@@ -49,6 +50,7 @@ class Servers extends Component {
             .then((data) => {
                 if(data.success) {
                     this.setState({
+                        dataFetched: true,
                         servers: data.servers
                     });
                 }
@@ -91,7 +93,7 @@ class Servers extends Component {
      */
     render() {
         // Check if app is clean installed
-        if(this.state.servers.length < 1) {
+        if(this.state.dataFetched && this.state.servers.length < 1) {
             return (
                 <main className="col-md-10 ml-sm-auto px-4">
                     <Head>

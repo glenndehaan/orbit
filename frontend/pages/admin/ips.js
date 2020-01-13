@@ -12,6 +12,7 @@ class Ips extends Component {
         super();
 
         this.state = {
+            dataFetched: false,
             ips: []
         };
     }
@@ -39,6 +40,7 @@ class Ips extends Component {
             .then((data) => {
                 if(data.success) {
                     this.setState({
+                        dataFetched: true,
                         ips: data.ips
                     });
                 }
@@ -55,7 +57,7 @@ class Ips extends Component {
      */
     render() {
         // Check if app is clean installed
-        if(this.state.ips.length < 1) {
+        if(this.state.dataFetched && this.state.ips.length < 1) {
             return (
                 <main className="col-md-10 ml-sm-auto px-4">
                     <Head>
