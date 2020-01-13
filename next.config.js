@@ -9,7 +9,7 @@ const withSass = require('@zeit/next-sass');
 const dev = process.env.NODE_ENV !== 'production';
 
 module.exports = withSass({
-    distDir: '../.next',
+    distDir: '../_next',
     poweredByHeader: false,
     webpack(config) {
         if (dev) {

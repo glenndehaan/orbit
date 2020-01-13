@@ -36,7 +36,7 @@ const server = express();
  * Init logger and set log level
  */
 global.log = require('simple-node-logger').createSimpleLogger({
-    logFilePath: `${__dirname}/log/orbit.log`,
+    logFilePath: dev ? `${__dirname}/log/orbit.log` : `${process.env.SNAP_COMMON}/orbit.log`,
     timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
 });
 global.log.setLevel(config.log.level);
@@ -199,6 +199,7 @@ mongodb.init().then(() => {
         if (err) throw err;
         handler.init();
         global.log.info(`[ORBIT] Service started with success! App running at: 0.0.0.0:3000`);
+        global.log.info(`[ORBIT] Support and Help: https://github.com/glenndehaan/orbit`);
     });
 });
 

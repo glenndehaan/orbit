@@ -16,12 +16,12 @@ module.exports = async (req, res) => {
 
     // Counters
     const totalApps = await appCollection.countDocuments();
-    const totalOffline = await appCollection.countDocuments({
+    const totalOnline = await appCollection.countDocuments({
         updated: {
             $gt: offlineEpoch.getTime()
         }
     });
-    const totalOnline = await appCollection.countDocuments({
+    const totalOffline = await appCollection.countDocuments({
         updated: {
             $lt: offlineEpoch.getTime()
         }

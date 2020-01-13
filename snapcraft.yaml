@@ -2,15 +2,45 @@ name: orbit
 version: git
 summary: A simple telemetry system to monitor your remote applications
 description: A simple telemetry system to monitor your remote applications
-confinement: devmode
+
+confinement: strict
+grade: stable
+
 base: core18
+
 parts:
+  node:
+    plugin: dump
+    source: https://nodejs.org/dist/latest-v8.x/node-v8.17.0-linux-x64.tar.xz
+    stage:
+      - bin
+      - include
+      - lib
+
   orbit:
-    plugin: nodejs
+    after: [node]
+    plugin: nil
     source: .
-    nodejs-package-manager: npm
-    nodejs-version: "8.17.0"
+    override-build: |
+      npm config set unsafe-perm true
+      npm install
+      npm rebuild
+      npm run build
+      cp -R . $SNAPCRAFT_PART_INSTALL/
+    build-packages:
+      - g++
+      - make
 
 apps:
   orbit:
-    command: orbit
+    command: bin/node $SNAP/app/bundle.js
+    plugs:
+      - network
+      - network-bind
+  orbit-server:
+    command: bin/node $SNAP/app/bundle.js
+    daemon: simple
+    restart-condition: always
+    plugs:
+      - network
+      - network-bind

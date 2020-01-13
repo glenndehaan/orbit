@@ -1,4 +1,9 @@
 /**
+ * Import vendor packages
+ */
+const fs = require('fs');
+
+/**
  * Import base packages
  */
 const deepmerge = require('deepmerge');
@@ -30,9 +35,11 @@ const baseConfig = {
  * Builds the config and then returns it when correct
  */
 try {
-    module.exports = deepmerge(baseConfig, eval('require')(dev ? __dirname + '/config.json' : process.cwd() + '/config.json'));
+    module.exports = deepmerge(baseConfig, eval('require')(dev ? `${__dirname}/config.json` : `${process.env.SNAP_COMMON}/config.json`));
 } catch (e) {
-    console.error(`[CONFIG] Does not exist! Location: ${dev ? __dirname + '/config.json' : process.cwd() + '/config.json'}`);
-    console.error(e);
-    process.exit(1);
+    const config = fs.readFileSync(__dirname + '/../../_scripts/config/config.build.json', 'utf8');
+    fs.writeFileSync(dev ? `${__dirname}/config.json` : `${process.env.SNAP_COMMON}/config.json`, config);
+    console.log(`[CONFIG] Default config has been saved! Location: ${dev ? `${__dirname}/config.json` : `${process.env.SNAP_COMMON}/config.json`}`);
+
+    module.exports = deepmerge(baseConfig, JSON.parse(config));
 }

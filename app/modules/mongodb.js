@@ -22,7 +22,15 @@ class MongoDB {
     init() {
         return new Promise((resolve) => {
             if (typeof config.mongo !== "undefined") {
-                mongoose.connect(`mongodb://${config.mongo.username}:${config.mongo.password}@${config.mongo.host}:${config.mongo.port}/${config.mongo.database}?authSource=admin`, {
+                let connectString = '';
+
+                if(config.mongo.username && config.mongo.password) {
+                    connectString = `mongodb://${config.mongo.username}:${config.mongo.password}@${config.mongo.host}:${config.mongo.port}/${config.mongo.database}?authSource=admin`;
+                } else {
+                    connectString = `mongodb://${config.mongo.host}:${config.mongo.port}/${config.mongo.database}`;
+                }
+
+                mongoose.connect(connectString, {
                     useNewUrlParser: true,
                     useCreateIndex: true,
                     useUnifiedTopology: true

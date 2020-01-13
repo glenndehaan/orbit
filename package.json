@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "description": "A simple telemetry system to monitor your remote applications",
   "scripts": {
-    "prestart": "rimraf ./.next",
+    "prestart": "rimraf ./_next",
     "start": "nodemon --watch app --exec 'npm run lint && node ./app/server.js'",
     "start:production": "NODE_ENV=production node ./app/server.js",
-    "prebuild": "rimraf ./.next",
+    "prebuild": "rimraf ./_next",
     "build": "next build ./frontend",
     "lint": "eslint -c ./package.json ./"
   },

@@ -6,7 +6,7 @@
 *.DS_STORE
 
 # Js & css build files
-.next/
+_next/
 *.log
 
 # Dependency managers
