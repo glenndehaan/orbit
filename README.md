@@ -46,6 +46,10 @@ To restart the app:
 service snap.orbit.orbit-server restart
 ```
 
+## Orbit Clients
+Below is an overview of all tested Orbit Clients:
+- NodeJS, Javascript: https://github.com/glenndehaan/orbit-js-client
+
 ## Snapcraft Docs
 - https://tutorials.ubuntu.com/tutorial/build-a-nodejs-service
 - https://forum.snapcraft.io/t/issue-with-nodejs-plugin-when-using-base-keyword/11109/12
