@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 
 export default class MyError extends Component {
     /**
@@ -20,9 +19,7 @@ export default class MyError extends Component {
                 </div>
                 <div>
                     Whoops it seems this page isn&apos;t here anymore. Lets get you back on track:<br/>
-                    <Link href="/admin/dashboard">
-                        <a>Dashboard</a>
-                    </Link>
+                    <a href="/">Home</a>
                 </div>
             </main>
         )

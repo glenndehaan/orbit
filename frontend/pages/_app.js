@@ -47,6 +47,14 @@ class MyApp extends App {
             );
         }
 
+        if(router.route === "/_error") {
+            return (
+                <Provider store={store}>
+                    <Component {...pageProps} />
+                </Provider>
+            );
+        }
+
         return (
             <Provider store={store}>
                 <>
