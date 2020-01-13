@@ -6,6 +6,8 @@ import {connect} from 'unistore/react';
 
 import strings from '../../utils/strings';
 
+import Welcome from '../../components/Welcome';
+
 class Dashboard extends Component {
     /**
      * Constructor
@@ -81,6 +83,19 @@ class Dashboard extends Component {
      * @returns {*}
      */
     render() {
+        // Check if app is clean installed
+        if(this.state.data.totalApps < 1) {
+            return (
+                <main className="col-md-10 ml-sm-auto px-4">
+                    <Head>
+                        <title>Dashboard | Orbit</title>
+                        <meta property="og:title" content={`Dashboard | Orbit`}/>
+                    </Head>
+                    <Welcome/>
+                </main>
+            )
+        }
+
         return (
             <main className="col-md-10 ml-sm-auto px-4">
                 <Head>

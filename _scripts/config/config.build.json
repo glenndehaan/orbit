@@ -3,5 +3,9 @@
     "host": "localhost",
     "port": 27017,
     "database": "orbit"
+  },
+  "login": {
+    "username": "admin",
+    "password": "admin@orbit!"
   }
 }

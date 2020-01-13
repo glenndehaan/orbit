@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Head from 'next/head';
 import {connect} from 'unistore/react';
 
+import Welcome from '../../components/Welcome';
+
 class Ips extends Component {
     /**
      * Constructor
@@ -52,6 +54,19 @@ class Ips extends Component {
      * @returns {*}
      */
     render() {
+        // Check if app is clean installed
+        if(this.state.ips.length < 1) {
+            return (
+                <main className="col-md-10 ml-sm-auto px-4">
+                    <Head>
+                        <title>IP&apos;s | Orbit</title>
+                        <meta property="og:title" content={`IP's | Orbit`}/>
+                    </Head>
+                    <Welcome/>
+                </main>
+            )
+        }
+
         return (
             <main className="col-md-10 ml-sm-auto px-4">
                 <Head>

@@ -3,8 +3,10 @@ import Head from 'next/head';
 import {connect} from 'unistore/react';
 
 import Settings from '../../components/icons/Settings';
-import Modal from "../../components/Modal";
-import strings from "../../utils/strings";
+import Modal from '../../components/Modal';
+import Welcome from '../../components/Welcome';
+
+import strings from '../../utils/strings';
 
 class Servers extends Component {
     /**
@@ -88,6 +90,19 @@ class Servers extends Component {
      * @returns {*}
      */
     render() {
+        // Check if app is clean installed
+        if(this.state.servers.length < 1) {
+            return (
+                <main className="col-md-10 ml-sm-auto px-4">
+                    <Head>
+                        <title>Servers | Orbit</title>
+                        <meta property="og:title" content={`Servers | Orbit`}/>
+                    </Head>
+                    <Welcome/>
+                </main>
+            )
+        }
+
         return (
             <main className="col-md-10 ml-sm-auto px-4">
                 <Head>
