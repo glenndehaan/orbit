@@ -88,9 +88,9 @@ export default class Login extends Component {
                 <br/>
                 <h1 className="h3 mb-3 font-weight-normal">Orbit</h1>
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
-                <input type="email" id="inputEmail" className={`form-control ${this.state.invalid ? 'is-invalid' : ''}`} placeholder="Email address" required autoFocus ref={(c) => this.username = c}/>
+                <input type="email" id="inputEmail" className={`form-control ${this.state.invalid ? 'is-invalid' : ''}`} placeholder="Email address" autoFocus ref={(c) => this.username = c}/>
                 <label htmlFor="inputPassword" className="sr-only">Password</label>
-                <input type="password" id="inputPassword" className={`form-control ${this.state.invalid ? 'is-invalid' : ''}`} placeholder="Password" required ref={(c) => this.password = c}/>
+                <input type="password" id="inputPassword" className={`form-control ${this.state.invalid ? 'is-invalid' : ''}`} placeholder="Password" ref={(c) => this.password = c}/>
                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={(e) => this.login(e)}>Sign in</button>
             </div>
         );

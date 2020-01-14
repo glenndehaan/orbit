@@ -25,6 +25,8 @@ export default class MyDocument extends Document {
                     <meta property="og:description" content="A simple telemetry system to monitor your remote applications"/>
                     <meta property="og:type" content="website"/>
 
+                    <meta name="robots" content="noindex"/>
+
                     <link rel="manifest" href="/manifest.json"/>
                     <link rel="shortcut icon" href="/images/favicon.ico"/>
                     <link rel="apple-touch-icon" href="/images/icon/logo_192x192.png"/>
