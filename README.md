@@ -11,7 +11,7 @@ A simple telemetry system to monitor your remote applications
 - Bootstrap
 
 ## Install
-- Install MongoDB 3.6 or higher on your machine.
+- Install MongoDB 3.6 (Standalone) or higher on your machine. (Installation Instructions: https://docs.mongodb.com/manual/installation/#mongodb-community-edition-installation-tutorials)
 - Install the app via snapd:
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/orbit)
@@ -53,6 +53,7 @@ Below is an overview of all tested Orbit Clients:
 ## Snapcraft Docs
 - https://tutorials.ubuntu.com/tutorial/build-a-nodejs-service
 - https://forum.snapcraft.io/t/issue-with-nodejs-plugin-when-using-base-keyword/11109/12
+- https://launchpad.net/builders
 
 ## License
 

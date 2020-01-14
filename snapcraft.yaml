@@ -2,7 +2,13 @@
 name: orbit
 version: git
 summary: A simple telemetry system to monitor your remote applications
-description: A simple telemetry system to monitor your remote applications
+description: |
+  Keep an eye on your applications.
+  Monitoring your remote installed applications wasn't this easy before.
+  Install the Orbit Server on a server of your choice.
+  Add an Orbit Client to your application.
+  That's it we will now store the information for you.
+  Install instruction/Help: https://github.com/glenndehaan/orbit#install
 license: MIT
 
 # Snap state

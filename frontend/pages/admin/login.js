@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
-import {connect} from 'unistore/react';
 
-import {actions} from '../../modules/store';
 import storage from '../../modules/storage';
 
 import Logo from '../../components/icons/Logo';
 
-class Login extends Component {
+export default class Login extends Component {
     /**
      * Constructor
      */
@@ -48,7 +46,7 @@ class Login extends Component {
             .then((response) => response.json())
             .then((data) => {
                 if(data.success) {
-                    this.props.updateUser(data.token);
+                    storage.set('token', data.token);
                     this.setState({
                         invalid: false
                     });
@@ -81,6 +79,11 @@ class Login extends Component {
                     <title>Login | Orbit</title>
                     <meta property="og:title" content={`Login | Orbit`}/>
                 </Head>
+                {this.props.nextConfig.defaultPassword &&
+                    <div className="alert alert-warning">
+                        <strong>Warning:</strong> Please change the default username/password in the config. <a href="https://github.com/glenndehaan/orbit#config" target="_blank" rel="noopener noreferrer">Documentation</a>
+                    </div>
+                }
                 <Logo height="75px"/><br/>
                 <br/>
                 <h1 className="h3 mb-3 font-weight-normal">Orbit</h1>
@@ -93,8 +96,3 @@ class Login extends Component {
         );
     }
 }
-
-/**
- * Connect the store to the component
- */
-export default connect('user', actions)(Login);

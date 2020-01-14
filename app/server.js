@@ -55,7 +55,13 @@ process.on('unhandledRejection', reason => {
  */
 const handler = instantListen(async () => {
     const nextDir = `${__dirname}/../frontend`;
-    const app = next({dev: dev, dir: nextDir, conf: require(`${__dirname}/../next.config.js`)});
+    const nextConfig = require(`${__dirname}/../next.config.js`);
+
+    nextConfig.publicRuntimeConfig = {
+        defaultPassword: config.login.username === "admin" && config.login.password === "admin@orbit!"
+    };
+
+    const app = next({dev: dev, dir: nextDir, conf: nextConfig});
 
     global.log.info(`[NEXT.JS] Is starting...`);
 

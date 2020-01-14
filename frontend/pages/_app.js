@@ -2,16 +2,15 @@ import '../utils/polyfills';
 
 import React from 'react';
 import App from 'next/app';
-import {Provider} from 'unistore/react';
 import {withRouter} from 'next/router';
+import getConfig from 'next/config';
 import fetch from 'isomorphic-unfetch';
 
-import store from '../modules/store';
-
 import '../scss/style.scss';
-import Topbar from "../components/Topbar";
-import Sidenav from "../components/Sidenav";
-import storage from "../modules/storage";
+
+import Topbar from '../components/Topbar';
+import Sidenav from '../components/Sidenav';
+import storage from '../modules/storage';
 
 /**
  * Get data for each page
@@ -33,7 +32,7 @@ const getPageData = (baseUrl, endpoint, token) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                if(data.success) {
+                if (data.success) {
                     resolve(data);
                 }
             })
@@ -63,7 +62,7 @@ const getAppToken = (baseUrl, token) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                if(data.success) {
+                if (data.success) {
                     resolve(data.token);
                 }
             })
@@ -79,6 +78,8 @@ class MyApp extends App {
      * @return Object
      */
     static async getInitialProps({ctx}) {
+        const {publicRuntimeConfig} = getConfig();
+
         const pageProps = {
             application: {
                 ip: ctx.req ? ctx.req.ip : '',
@@ -90,7 +91,7 @@ class MyApp extends App {
             }
         };
 
-        if(ctx.pathname !== "/" && ctx.pathname !== "/admin/login" && ctx.pathname !== "/_error") {
+        if (ctx.pathname !== "/" && ctx.pathname !== "/admin/login" && ctx.pathname !== "/_error") {
             const apiPath = ctx.pathname.replace('/admin/', '');
             console.log('apiPath', apiPath);
 
@@ -100,6 +101,8 @@ class MyApp extends App {
             pageProps.pageData = {};
             pageProps.token = '';
         }
+
+        pageProps.nextConfig = publicRuntimeConfig;
 
         return {pageProps};
     }
@@ -116,44 +119,42 @@ class MyApp extends App {
 
         if (router.pathname === "/") {
             return (
-                <Provider store={store}>
+                <>
                     <div id="home">
                         <Component {...pageProps} />
                     </div>
-                </Provider>
+                </>
             );
         }
 
         if (router.pathname === "/admin/login") {
             return (
-                <Provider store={store}>
+                <>
                     <div id="signin-page">
                         <Component {...pageProps} />
                     </div>
-                </Provider>
+                </>
             );
         }
 
         if (router.route === "/_error") {
             return (
-                <Provider store={store}>
+                <>
                     <Component {...pageProps} />
-                </Provider>
+                </>
             );
         }
 
         return (
-            <Provider store={store}>
-                <>
-                    <Topbar/>
-                    <div className="container-fluid">
-                        <div className="row">
-                            <Sidenav/>
-                            <Component {...pageProps} />
-                        </div>
+            <>
+                <Topbar/>
+                <div className="container-fluid">
+                    <div className="row">
+                        <Sidenav/>
+                        <Component {...pageProps} />
                     </div>
-                </>
-            </Provider>
+                </div>
+            </>
         );
     }
 }
