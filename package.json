@@ -68,6 +68,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "instant-listen": "^0.1.0",
+    "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
     "memorystore": "^1.6.1",
     "mongoose": "^5.8.5",

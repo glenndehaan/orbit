@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import {connect} from 'unistore/react';
 // import Chartist from 'chartist';
 
 import strings from '../../utils/strings';
 
 import Welcome from '../../components/Welcome';
 
-class Dashboard extends Component {
+export default class Dashboard extends Component {
     /**
      * Constructor
      */
@@ -16,67 +15,23 @@ class Dashboard extends Component {
         super();
 
         this.onlineOfflineChart = null;
-        this.state = {
-            dataFetched: false,
-            data: {
-                topDiscovered: [],
-                topDiscoveredIps: [],
-                topOffline: [],
-                totalOnline: 0,
-                totalOffline: 0,
-                totalApps: 0,
-                totalServers: 0
-            }
-        };
     }
 
     /**
      * Runs then component mounts
      */
     componentDidMount() {
-        this.getDashboardData(() => {
-            // const data = {
-            //     series: [this.state.data.totalOnline, this.state.data.totalOffline]
-            // };
-            //
-            // new Chartist.Pie(this.onlineOfflineChart, data, {
-            //     labelInterpolationFnc: function(value) {
-            //         return Math.round(value / data.series.reduce(strings.sum) * 100) + '%';
-            //     }
-            // });
-        });
-    }
-
-    /**
-     * Get all dashboard data
-     *
-     * @param completed
-     */
-    getDashboardData(completed) {
-        fetch('/api/dashboard', {
-            credentials: 'same-origin',
-            method: 'GET',
-            headers: {
-                'token': this.props.user.token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if(data.success) {
-                    this.setState({
-                        dataFetched: true,
-                        data: data
-                    });
-
-                    completed();
-                }
-            })
-            .catch((error) => {
-                completed();
-
-                console.error('Error:', error);
-            });
+        // this.getDashboardData(() => {
+        //     // const data = {
+        //     //     series: [this.state.data.totalOnline, this.state.data.totalOffline]
+        //     // };
+        //     //
+        //     // new Chartist.Pie(this.onlineOfflineChart, data, {
+        //     //     labelInterpolationFnc: function(value) {
+        //     //         return Math.round(value / data.series.reduce(strings.sum) * 100) + '%';
+        //     //     }
+        //     // });
+        // });
     }
 
     /**
@@ -86,14 +41,14 @@ class Dashboard extends Component {
      */
     render() {
         // Check if app is clean installed
-        if(this.state.dataFetched && this.state.data.totalApps < 1) {
+        if(this.props.pageData.totalApps < 1) {
             return (
                 <main className="col-md-10 ml-sm-auto px-4">
                     <Head>
                         <title>Dashboard | Orbit</title>
                         <meta property="og:title" content={`Dashboard | Orbit`}/>
                     </Head>
-                    <Welcome/>
+                    <Welcome host={this.props.application.host} token={this.props.token}/>
                 </main>
             )
         }
@@ -111,21 +66,21 @@ class Dashboard extends Component {
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                {this.state.data.totalApps} discovered app(s)
+                                {this.props.pageData.totalApps} discovered app(s)
                             </div>
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                {this.state.data.totalServers} discovered server(s)
+                                {this.props.pageData.totalServers} discovered server(s)
                             </div>
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
                             <div className="card-body text-center">
-                                {this.state.data.totalOnline} app(s) online / {this.state.data.totalOffline} app(s) offline
+                                {this.props.pageData.totalOnline} app(s) online / {this.props.pageData.totalOffline} app(s) offline
                                 <div ref={(c) => this.onlineOfflineChart = c}/>
                             </div>
                         </div>
@@ -145,7 +100,7 @@ class Dashboard extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.state.data.topDiscovered.map((app, key) => (
+                                    {this.props.pageData.topDiscovered.map((app, key) => (
                                         <tr key={key}>
                                             <td>{app.project}</td>
                                             <td>{app.os.hostname}</td>
@@ -174,7 +129,7 @@ class Dashboard extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.data.topOffline.map((app, key) => (
+                                        {this.props.pageData.topOffline.map((app, key) => (
                                             <tr key={key}>
                                                 <td>{app.project}</td>
                                                 <td>{app.os.hostname}</td>
@@ -203,7 +158,7 @@ class Dashboard extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.state.data.topDiscoveredIps.map((app, key) => (
+                                    {this.props.pageData.topDiscoveredIps.map((app, key) => (
                                         <tr key={key}>
                                             <td>{app.public.ip} ({app.os.hostname})</td>
                                             <td>{app.public.country_code}</td>
@@ -221,8 +176,3 @@ class Dashboard extends Component {
         );
     }
 }
-
-/**
- * Connect the store to the component
- */
-export default connect('user')(Dashboard);

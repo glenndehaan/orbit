@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
-import {connect} from 'unistore/react';
 
 import Settings from '../../components/icons/Settings';
 import Modal from '../../components/Modal';
@@ -8,7 +7,7 @@ import Welcome from '../../components/Welcome';
 
 import strings from '../../utils/strings';
 
-class Apps extends Component {
+export default class Apps extends Component {
     /**
      * Constructor
      */
@@ -16,9 +15,6 @@ class Apps extends Component {
         super();
 
         this.state = {
-            token: '[token]',
-            dataFetched: false,
-            apps: [],
             modalOpen: false,
             modalApp: {
                 os: {},
@@ -26,65 +22,6 @@ class Apps extends Component {
                 public: {}
             }
         };
-    }
-
-    /**
-     * Runs then component mounts
-     */
-    componentDidMount() {
-        this.getToken();
-        this.getApps();
-    }
-
-    /**
-     * Get the app token
-     */
-    getToken() {
-        fetch('/api/token', {
-            credentials: 'same-origin',
-            method: 'GET',
-            headers: {
-                'token': this.props.user.token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if(data.success) {
-                    this.setState({
-                        token: data.token
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    }
-
-    /**
-     * Get all apps
-     */
-    getApps() {
-        fetch('/api/apps', {
-            credentials: 'same-origin',
-            method: 'GET',
-            headers: {
-                'token': this.props.user.token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if(data.success) {
-                    this.setState({
-                        dataFetched: true,
-                        apps: data.apps
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
     }
 
     /**
@@ -120,14 +57,14 @@ class Apps extends Component {
      */
     render() {
         // Check if app is clean installed
-        if(this.state.dataFetched && this.state.apps.length < 1) {
+        if(this.props.pageData.apps.length < 1) {
             return (
                 <main className="col-md-10 ml-sm-auto px-4">
                     <Head>
                         <title>Apps | Orbit</title>
                         <meta property="og:title" content={`Apps | Orbit`}/>
                     </Head>
-                    <Welcome/>
+                    <Welcome host={this.props.application.host} token={this.props.token}/>
                 </main>
             )
         }
@@ -298,7 +235,7 @@ class Apps extends Component {
                     <h1 className="h2">Apps</h1>
                     <div className="btn-toolbar mb-2 mb-md-0">
                         <div className="btn-group mr-2">
-                            App token: {this.state.token}
+                            App token: {this.props.token}
                         </div>
                     </div>
                 </div>
@@ -316,7 +253,7 @@ class Apps extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.apps.map((app, key) => {
+                            {this.props.pageData.apps.map((app, key) => {
                                 const timeType = strings.timeSince(Math.round(app.updated)).type;
                                 const timeNumber = strings.timeSince(Math.round(app.updated)).number;
 
@@ -341,8 +278,3 @@ class Apps extends Component {
         );
     }
 }
-
-/**
- * Connect the store to the component
- */
-export default connect('user')(Apps);

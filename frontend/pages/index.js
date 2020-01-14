@@ -54,7 +54,7 @@ export default class Home extends Component {
                 <Logo height="75px"/><br/>
                 <br/>
                 <h1 className="h2">Your Device</h1>
-                <strong>IP Address:</strong> <strong>Unknown!</strong> Please contact your network administrator<br/><br/>
+                <strong>IP Address:</strong> {this.props.application.ip === '' ? <span><strong>Unknown!</strong> Please contact your network administrator </span> : this.props.application.ip}<br/><br/>
                 <strong>Browser</strong>: {this.state.browser}<noscript>Javascript needs to be enabled to perform this test!</noscript><br/><br/>
                 <strong>Resolution</strong>: <span>{this.state.resolution}<noscript>Javascript needs to be enabled to perform this test!</noscript></span><br/><br/>
                 <strong>Device Pixel Ratio</strong>: <span>{this.state.pixelRatio}<noscript>Javascript needs to be enabled to perform this test!</noscript></span><br/><br/>

@@ -1,52 +1,8 @@
 import React, {Component} from 'react';
-import {connect} from 'unistore/react';
 
 import Logo from './icons/Logo';
 
-class Welcome extends Component {
-    /**
-     * Constructor
-     */
-    constructor() {
-        super();
-
-        this.state = {
-            token: ''
-        };
-    }
-
-    /**
-     * Runs then component mounts
-     */
-    componentDidMount() {
-        this.getToken();
-    }
-
-    /**
-     * Get the app token
-     */
-    getToken() {
-        fetch('/api/token', {
-            credentials: 'same-origin',
-            method: 'GET',
-            headers: {
-                'token': this.props.user.token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if(data.success) {
-                    this.setState({
-                        token: data.token
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    }
-
+export default class Welcome extends Component {
     /**
      * React render function
      *
@@ -67,16 +23,11 @@ class Welcome extends Component {
                     To get started pick an Orbit client of your choice and implement this inside your own application. (<a href="https://github.com/glenndehaan/orbit#orbit-clients" target="_blank" rel="noopener noreferrer">Orbit Clients</a>)<br/>
                     Use the url/token below as connection details inside the Orbit client:<br/><br/>
                     <code>
-                        URL: {typeof window !== "undefined" ? window.location.origin : ''}<br/>
-                        Token: {this.state.token}
+                        URL: {this.props.host}<br/>
+                        Token: {this.props.token}
                     </code>
                 </div>
             </div>
         );
     }
 }
-
-/**
- * Connect the store to the component
- */
-export default connect('user')(Welcome);

@@ -47,6 +47,7 @@ module.exports = {
 
         // Set session
         req.session.userLoggedIn = true;
+        req.session.token = token;
 
         // Send success
         res.json({

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
-import {connect} from 'unistore/react';
 
 import Settings from '../../components/icons/Settings';
 import Modal from '../../components/Modal';
@@ -8,7 +7,7 @@ import Welcome from '../../components/Welcome';
 
 import strings from '../../utils/strings';
 
-class Servers extends Component {
+export default class Servers extends Component {
     /**
      * Constructor
      */
@@ -16,8 +15,6 @@ class Servers extends Component {
         super();
 
         this.state = {
-            dataFetched: false,
-            servers: [],
             modalOpen: false,
             modalServer: {
                 os: {},
@@ -25,39 +22,6 @@ class Servers extends Component {
                 public: {}
             }
         };
-    }
-
-    /**
-     * Runs then component mounts
-     */
-    componentDidMount() {
-        this.getApps();
-    }
-
-    /**
-     * Get all apps
-     */
-    getApps() {
-        fetch('/api/servers', {
-            credentials: 'same-origin',
-            method: 'GET',
-            headers: {
-                'token': this.props.user.token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if(data.success) {
-                    this.setState({
-                        dataFetched: true,
-                        servers: data.servers
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
     }
 
     /**
@@ -93,14 +57,14 @@ class Servers extends Component {
      */
     render() {
         // Check if app is clean installed
-        if(this.state.dataFetched && this.state.servers.length < 1) {
+        if(this.props.pageData.servers.length < 1) {
             return (
                 <main className="col-md-10 ml-sm-auto px-4">
                     <Head>
                         <title>Servers | Orbit</title>
                         <meta property="og:title" content={`Servers | Orbit`}/>
                     </Head>
-                    <Welcome/>
+                    <Welcome host={this.props.application.host} token={this.props.token}/>
                 </main>
             )
         }
@@ -219,7 +183,7 @@ class Servers extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.servers.map((server, key) => (
+                            {this.props.pageData.servers.map((server, key) => (
                                 <tr key={key}>
                                     <td>{server.os.hostname}</td>
                                     <td>{server.public.ip} ({server.public.country_code})</td>
@@ -234,8 +198,3 @@ class Servers extends Component {
         );
     }
 }
-
-/**
- * Connect the store to the component
- */
-export default connect('user')(Servers);
