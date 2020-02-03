@@ -22,6 +22,7 @@ const appsController = require('./controllers/api/apps');
 const dashboardController = require('./controllers/api/dashboard');
 const ipsController = require('./controllers/api/ips');
 const serversController = require('./controllers/api/servers');
+const contactsController = require('./controllers/api/contacts');
 
 /**
  * Define global variables
@@ -158,6 +159,7 @@ server.post('/api/app', appController);
 server.get('/api/apps', appsController);
 server.get('/api/ips', ipsController);
 server.get('/api/servers', serversController);
+server.get('/api/contacts', contactsController);
 server.get('/api/dashboard', dashboardController);
 server.get('/api/token', tokenController);
 server.post('/api/user/login', userController.login);
