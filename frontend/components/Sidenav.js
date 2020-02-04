@@ -24,6 +24,9 @@ class Sidenav extends Component {
                                 </a>
                             </Link>
                         </li>
+                        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Monitoring</span>
+                        </h6>
                         <li className="nav-item">
                             <Link href="/admin/apps">
                                 <a className={`nav-link ${this.props.router.pathname === '/admin/apps' ? 'active' : ''}`}>
@@ -58,6 +61,9 @@ class Sidenav extends Component {
                                 </a>
                             </Link>
                         </li>
+                        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Alerting</span>
+                        </h6>
                         <li className="nav-item">
                             <Link href="/admin/contacts">
                                 <a className={`nav-link ${this.props.router.pathname === '/admin/contacts' ? 'active' : ''}`}>

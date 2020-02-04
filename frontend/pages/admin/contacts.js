@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
+import fetch from 'isomorphic-unfetch';
 
 import Settings from '../../components/icons/Settings';
-import Modal from "../../components/Modal";
+import Modal from '../../components/Modal';
 
 export default class Contacts extends Component {
     /**
@@ -108,9 +109,40 @@ export default class Contacts extends Component {
      * Adds a new contact
      */
     submit() {
-        console.log('send!');
-        Router.push('/admin/contacts');
-        this.closeModal();
+        const body = {
+            name: this.contactName.value,
+            service: this.serviceType.value,
+            information: {}
+        };
+
+        const fields = Object.keys(this[this.state.type]);
+        for(let item = 0; item < fields.length; item++) {
+            const name = fields[item];
+            const field = this[this.state.type][name];
+
+            body.information[name] = field.value;
+        }
+
+        fetch(`${this.props.application.host}/api/contact`, {
+            credentials: 'same-origin',
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                'token': this.props.application.user.token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    console.log('hoi');
+                    Router.push('/admin/contacts');
+                    this.closeModal();
+                }
+            })
+            .catch((error) => {
+                console.error('API Error:', error);
+            });
     }
 
     /**
@@ -186,7 +218,7 @@ export default class Contacts extends Component {
                                 <tr key={key}>
                                     <td>{contact.name}</td>
                                     <td>{contact.service}</td>
-                                    <td><Settings/></td>
+                                    <td><Settings height="20px" color="grey"/></td>
                                 </tr>
                             ))}
                         </tbody>
