@@ -6,27 +6,26 @@ const uuidv4 = require('uuid/v4');
 /**
  * Import own packages
  */
-const contactCollection = require('../../collections/Contact');
 const alertCollection = require('../../collections/Alert');
 
 /**
- * Export all contact functions
+ * Export all alert functions
  */
 module.exports = {
     /**
-     * Create a new Contact
+     * Create a new Alert
      *
      * @param req
      * @param res
      * @return {Promise<void>}
      */
     create: async (req, res) => {
-        const contact = new contactCollection();
-        contact.id = uuidv4();
-        contact.name = req.body.name;
-        contact.service = req.body.service;
-        contact.information = req.body.information;
-        await contact.save();
+        const alert = new alertCollection();
+        alert.id = uuidv4();
+        alert.contact = req.body.contact;
+        alert.app = req.body.app;
+        alert.alert = req.body.alert;
+        await alert.save();
 
         res.json({
             success: true
@@ -34,19 +33,15 @@ module.exports = {
     },
 
     /**
-     * Remove a Contact
+     * Remove an alert
      *
      * @param req
      * @param res
      * @return {Promise<void>}
      */
     delete: async (req, res) => {
-        await contactCollection.deleteOne({
+        await alertCollection.deleteOne({
             id: req.query.id
-        });
-
-        await alertCollection.deleteMany({
-            contact: req.query.id
         });
 
         res.json({

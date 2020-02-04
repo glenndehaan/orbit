@@ -24,6 +24,8 @@ const ipsController = require('./controllers/api/ips');
 const serversController = require('./controllers/api/servers');
 const contactsController = require('./controllers/api/contacts');
 const contactController = require('./controllers/api/contact');
+const alertsController = require('./controllers/api/alerts');
+const alertController = require('./controllers/api/alert');
 
 /**
  * Define global variables
@@ -157,10 +159,14 @@ server.use('/api', async (req, res, next) => {
  * Add api endpoints
  */
 server.post('/api/app', appController);
-server.post('/api/contact', contactController);
+server.post('/api/contact', contactController.create);
+server.delete('/api/contact', contactController.delete);
+server.post('/api/alert', alertController.create);
+server.delete('/api/alert', alertController.delete);
 server.get('/api/apps', appsController);
 server.get('/api/ips', ipsController);
 server.get('/api/servers', serversController);
+server.get('/api/alerts', alertsController);
 server.get('/api/contacts', contactsController);
 server.get('/api/dashboard', dashboardController);
 server.get('/api/token', tokenController);

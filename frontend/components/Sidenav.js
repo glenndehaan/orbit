@@ -74,16 +74,17 @@ class Sidenav extends Component {
                                 </a>
                             </Link>
                         </li>
-                        {/*<li className="nav-item">*/}
-                        {/*    <a className="nav-link" href="#">*/}
-                        {/*        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bar-chart-2">*/}
-                        {/*            <line x1="18" y1="20" x2="18" y2="10"/>*/}
-                        {/*            <line x1="12" y1="20" x2="12" y2="4"/>*/}
-                        {/*            <line x1="6" y1="20" x2="6" y2="14"/>*/}
-                        {/*        </svg>*/}
-                        {/*        Reports*/}
-                        {/*    </a>*/}
-                        {/*</li>*/}
+                        <li className="nav-item">
+                            <Link href="/admin/alerts">
+                                <a className={`nav-link ${this.props.router.pathname === '/admin/alerts' ? 'active' : ''}`}>
+                                    <svg className="feather" width="24" height="24" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M10 17a7 7 0 100-14 7 7 0 000 14zm0 1a8 8 0 100-16 8 8 0 000 16z" clipRule="evenodd"/>
+                                        <path d="M9.002 13a1 1 0 112 0 1 1 0 01-2 0zM9.1 6.995a.905.905 0 111.8 0l-.35 3.507a.553.553 0 01-1.1 0L9.1 6.995z"/>
+                                    </svg>
+                                    Alerts
+                                </a>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>

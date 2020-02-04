@@ -114,6 +114,50 @@ const sum = (a, b) => {
 };
 
 /**
+ * Convert the alert type to a user readable description
+ *
+ * @param type
+ * @return {string}
+ */
+const alertType = (type) => {
+    if(type === "app-offline") {
+        return "App gone offline";
+    }
+
+    if(type === "app-discovered") {
+        return "New app discovered";
+    }
+
+    return "Unknown alert type..."
+};
+
+/**
+ * Get the contact data by ID
+ *
+ * @param contacts
+ * @param id
+ * @return {*}
+ */
+const getContactById = (contacts, id) => {
+    return contacts.filter((contact) => {
+        return contact.id === id;
+    });
+};
+
+/**
+ * Get the app data by ID
+ *
+ * @param apps
+ * @param id
+ * @return {*}
+ */
+const getAppById = (apps, id) => {
+    return apps.filter((app) => {
+        return app.id === id;
+    });
+};
+
+/**
  * Export string utils
  */
-export default {timeSince, formatBytes, secondsToTime, sum};
+export default {timeSince, formatBytes, secondsToTime, sum, alertType, getContactById, getAppById};

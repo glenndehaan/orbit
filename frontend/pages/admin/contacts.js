@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
-import Settings from '../../components/icons/Settings';
+import Trash from '../../components/icons/Trash';
 import Modal from '../../components/Modal';
 
 export default class Contacts extends Component {
@@ -135,10 +135,32 @@ export default class Contacts extends Component {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    console.log('hoi');
                     Router.push('/admin/contacts');
                     this.closeModal();
                 }
+            })
+            .catch((error) => {
+                console.error('API Error:', error);
+            });
+    }
+
+    /**
+     * Remove an alert
+     *
+     * @param id
+     */
+    delete(id) {
+        fetch(`${this.props.application.host}/api/contact?id=${id}`, {
+            credentials: 'same-origin',
+            method: 'DELETE',
+            headers: {
+                'token': this.props.application.user.token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then(() => {
+                Router.push('/admin/contacts');
             })
             .catch((error) => {
                 console.error('API Error:', error);
@@ -218,7 +240,7 @@ export default class Contacts extends Component {
                                 <tr key={key}>
                                     <td>{contact.name}</td>
                                     <td>{contact.service}</td>
-                                    <td><Settings height="20px" color="grey"/></td>
+                                    <td><Trash height="20px" color="#dc3545" onClick={() => this.delete(contact.id)}/></td>
                                 </tr>
                             ))}
                         </tbody>
