@@ -5,6 +5,8 @@ const appCollection = require('../../collections/App');
 const serverCollection = require('../../collections/Server');
 const settingsCollection = require('../../collections/Settings');
 
+const alerting = require('../../modules/alerting');
+
 /**
  * Exports the app data endpoint
  *
@@ -47,6 +49,9 @@ module.exports = async (req, res) => {
         // Store the data in mongo
         const app = new appCollection(req.body);
         await app.save();
+
+        // Send new app alert
+        await alerting.send("app-discovered", req.body);
 
         global.log.info(`[ORBIT] New app created (ID: ${req.body.id})`);
     } else {
