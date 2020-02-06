@@ -3,6 +3,7 @@
  */
 const fetch = require('node-fetch');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 
 /**
  * Import own modules
@@ -29,19 +30,24 @@ const email = (type, alert, contact, app) => {
 
         if(type === "app-offline") {
             title += "App Offline";
-            message = `An app has gone offline: <br/><br/><b> Name:</b> ${app.project}<br/><b> Server:</b> ${app.os.hostname}<br/><b> IP:</b> ${app.public.ip} (${app.public.country_code})<br/><b> Client:</b> ${app.client}`;
+            message = `<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">An app has gone offline:</p><br/><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 5px;"><b>Name:</b> ${app.project}</p><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 5px;"><b>Server:</b> ${app.os.hostname}</p><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 5px;"><b>IP:</b> ${app.public.ip} (${app.public.country_code})</p><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;"><b>Client:</b> ${app.client}</p>`;
         }
 
         if(type === "app-discovered") {
             title += "App Discovered";
-            message = `A new app has been discovered! <br/><br/><b> Name:</b> ${app.project}<br/><b> Server:</b> ${app.os.hostname}<br/><b> IP:</b> ${app.public.ip} (${app.public.country_code})<br/><b> Client:</b> ${app.client}`;
+            message = `<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">A new app has been discovered!</p><br/><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 5px;"><b>Name:</b> ${app.project}</p><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 5px;"><b>Server:</b> ${app.os.hostname}</p><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 5px;"><b>IP:</b> ${app.public.ip} (${app.public.country_code})</p><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;"><b>Client:</b> ${app.client}</p>`;
         }
+
+        let template = fs.readFileSync(`${__dirname}/../templates/email.html`, 'utf-8');
+        template = template.replace('__CONTENT__', message);
+        template = template.replace('__PRE_HEADER__', title);
+        template = template.replace('__TITLE__', title);
 
         transport.sendMail({
             from: config.email.from,
             to: contact.information.to,
             subject: title,
-            html: message
+            html: template
         }, () => {
             resolve();
         })
