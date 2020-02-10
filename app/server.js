@@ -13,8 +13,13 @@ const jwt = require('jsonwebtoken');
  * Import own packages
  */
 const config = require('./config');
+
 const mongodb = require('./modules/mongodb');
+const alerting = require('./modules/alerting');
+
 const settingsCollection = require('./collections/Settings');
+const appCollection = require('./collections/App');
+
 const appController = require('./controllers/api/app');
 const userController = require('./controllers/api/user');
 const tokenController = require('./controllers/api/token');
@@ -31,6 +36,7 @@ const alertController = require('./controllers/api/alert');
  * Define global variables
  */
 const dev = process.env.NODE_ENV !== 'production';
+const sendAlerts = {};
 
 /**
  * Define Next.JS variables
@@ -221,6 +227,49 @@ mongodb.init().then(() => {
         global.log.info(`[ORBIT] Service started with success! App running at: 0.0.0.0:43001`);
         global.log.info(`[ORBIT] Support and Help: https://github.com/glenndehaan/orbit`);
     });
+
+    // Alerting check
+    setInterval(async () => {
+        global.log.info('[ALERTS] Checking for new alerts to send...');
+
+        const currentEpoch = new Date();
+        const offlineEpoch = new Date(currentEpoch.getTime() - 1200000);
+
+        const onlineApps = await appCollection.find({
+            updated: {
+                $gt: offlineEpoch.getTime()
+            }
+        });
+        const offlineApps = await appCollection.find({
+            updated: {
+                $lt: offlineEpoch.getTime()
+            }
+        });
+
+        // Check if app is online
+        for(let item = 0; item < onlineApps.length; item++) {
+            const app = onlineApps[item];
+
+            if(typeof sendAlerts[app.id] !== "undefined") {
+                // Send online app alert
+                await alerting.send("app-online", app);
+
+                delete sendAlerts[app.id];
+            }
+        }
+
+        // Send alerts to offline apps
+        for(let item = 0; item < offlineApps.length; item++) {
+            const app = offlineApps[item];
+
+            if(typeof sendAlerts[app.id] === "undefined") {
+                // Send offline app alert
+                await alerting.send("app-offline", app);
+
+                sendAlerts[app.id] = true;
+            }
+        }
+    }, 300000); // 5 minutes
 });
 
 handler.ready.catch(err => {

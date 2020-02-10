@@ -29,6 +29,10 @@ export default class Contacts extends Component {
             destinationKey: null,
             applicationApiKey: null
         };
+
+        this.slack = {
+            url: null
+        };
     }
 
     /**
@@ -191,6 +195,7 @@ export default class Contacts extends Component {
                                 <option value="" disabled>Select a service type</option>
                                 <option value="email">Email</option>
                                 <option value="pushover">Pushover</option>
+                                <option value="slack">Slack</option>
                             </select>
                         </div>
                         <hr/>
@@ -213,6 +218,15 @@ export default class Contacts extends Component {
                                 <div className="form-group">
                                     <label htmlFor="pushover-application-api-key">Application API token</label>
                                     <input type="text" className="form-control" id="pushover-application-api-key" ref={(c) => this.pushover.applicationApiKey = c}/>
+                                </div>
+                            </>
+                        }
+                        {this.state.type === "slack" &&
+                            <>
+                                <h5>Slack Service Options</h5>
+                                <div className="form-group">
+                                    <label htmlFor="slack-webhook-url">Webhook URL</label>
+                                    <input type="text" className="form-control" id="slack-webhook-url" ref={(c) => this.slack.url = c}/>
                                 </div>
                             </>
                         }

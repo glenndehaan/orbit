@@ -17,7 +17,9 @@ const dev = process.env.NODE_ENV !== 'production';
  * Define base config
  */
 const baseConfig = {
-    application: {},
+    application: {
+        baseUrl: "https://orbit.example.com"
+    },
     log: {
         level: "info"
     },
@@ -28,6 +30,14 @@ const baseConfig = {
     login: {
         username: "admin",
         password: "admin@orbit!"
+    },
+    email: {
+        from: "noreply@dpdk.com"
+    },
+    smtp: {
+        host: "smtp.example.com",
+        port: 25,
+        secure: false
     }
 };
 

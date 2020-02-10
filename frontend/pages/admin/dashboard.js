@@ -85,6 +85,13 @@ export default class Dashboard extends Component {
                             </div>
                         </div>
                     </div>
+                    <div className="col-sm">
+                        <div className="card">
+                            <div className="card-body text-center">
+                                {this.props.pageData.totalAlerts} alert rule(s)
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="col-sm">

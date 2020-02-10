@@ -3,6 +3,7 @@
  */
 const appCollection = require('../../collections/App');
 const serverCollection = require('../../collections/Server');
+const alertCollection = require('../../collections/Alert');
 
 /**
  * Returns all dashboard data
@@ -28,6 +29,7 @@ module.exports = async (req, res) => {
             $lt: offlineEpoch.getTime()
         }
     });
+    const totalAlerts = await alertCollection.countDocuments();
 
     // Data
     const topDiscovered = await appCollection.find({
@@ -73,6 +75,7 @@ module.exports = async (req, res) => {
         totalOnline,
         totalOffline,
         totalApps,
-        totalServers
+        totalServers,
+        totalAlerts
     });
 };

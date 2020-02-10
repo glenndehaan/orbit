@@ -16,7 +16,8 @@ export default class Contacts extends Component {
         super();
 
         this.state = {
-            modalOpen: false
+            modalOpen: false,
+            allAppsSelected: false
         };
 
         this.contact = null;
@@ -130,6 +131,21 @@ export default class Contacts extends Component {
     }
 
     /**
+     * Updates the all apps selected state
+     */
+    updateApp() {
+        if(this.app.value === "all") {
+            this.setState({
+                allAppsSelected: true
+            });
+        } else {
+            this.setState({
+                allAppsSelected: false
+            });
+        }
+    }
+
+    /**
      * React render function
      *
      * @returns {*}
@@ -154,7 +170,7 @@ export default class Contacts extends Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="app">App</label>
-                            <select className="form-control" id="app" ref={(c) => this.app = c} defaultValue="">
+                            <select className="form-control" id="app" onChange={() => this.updateApp()} ref={(c) => this.app = c} defaultValue="">
                                 <option value="" disabled>Select an app</option>
                                 <option value="all">Apply rule to all apps</option>
                                 {this.props.pageData.apps.map((app, key) => (
@@ -167,7 +183,8 @@ export default class Contacts extends Component {
                             <select className="form-control" id="rule" ref={(c) => this.rule = c} defaultValue="">
                                 <option value="" disabled>Select an alert rule</option>
                                 <option value="app-offline">{strings.alertType("app-offline")}</option>
-                                <option value="app-discovered">{strings.alertType("app-discovered")}</option>
+                                <option value="app-online">{strings.alertType("app-online")}</option>
+                                <option value="app-discovered" disabled={!this.state.allAppsSelected}>{strings.alertType("app-discovered")}</option>
                             </select>
                         </div>
                         <hr/>

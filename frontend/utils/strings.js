@@ -124,6 +124,10 @@ const alertType = (type) => {
         return "App gone offline";
     }
 
+    if(type === "app-online") {
+        return "App recovered";
+    }
+
     if(type === "app-discovered") {
         return "New app discovered";
     }
