@@ -4,8 +4,8 @@
   "description": "A simple telemetry system to monitor your remote applications",
   "scripts": {
     "prestart": "rimraf ./_next",
-    "start": "nodemon --watch app --exec 'npm run lint && node ./app/server.js'",
-    "start:production": "NODE_ENV=production node ./app/server.js",
+    "start": "nodemon --watch app --exec 'npm run lint && node ./app/server.js server'",
+    "start:production": "NODE_ENV=production node ./app/server.js server",
     "prebuild": "rimraf ./_next",
     "build": "next build ./frontend",
     "lint": "eslint -c ./package.json ./"
@@ -60,6 +60,7 @@
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
     "chartist": "^0.11.4",
+    "commander": "^4.1.1",
     "cross-env": "^7.0.0",
     "deepmerge": "^4.2.2",
     "eslint": "^6.6.0",

@@ -53,7 +53,7 @@ apps:
       - network
       - network-bind
   orbit-server:
-    command: bin/node $SNAP/app/bundle.js
+    command: bin/node $SNAP/app/bundle.js server
     daemon: simple
     restart-condition: always
     plugs:
