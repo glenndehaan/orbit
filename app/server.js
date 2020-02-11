@@ -23,13 +23,10 @@ const appCollection = require('./collections/App');
 const appController = require('./controllers/api/app');
 const userController = require('./controllers/api/user');
 const tokenController = require('./controllers/api/token');
-const appsController = require('./controllers/api/apps');
 const dashboardController = require('./controllers/api/dashboard');
-const ipsController = require('./controllers/api/ips');
-const serversController = require('./controllers/api/servers');
-const contactsController = require('./controllers/api/contacts');
+const ipController = require('./controllers/api/ip');
+const serverController = require('./controllers/api/server');
 const contactController = require('./controllers/api/contact');
-const alertsController = require('./controllers/api/alerts');
 const alertController = require('./controllers/api/alert');
 
 /**
@@ -164,19 +161,21 @@ server.use('/api', async (req, res, next) => {
 /**
  * Add api endpoints
  */
-server.post('/api/app', appController);
+server.post('/api/user/login', userController.login);
+server.post('/api/app', appController.create);
 server.post('/api/contact', contactController.create);
-server.delete('/api/contact', contactController.delete);
 server.post('/api/alert', alertController.create);
+
+server.delete('/api/contact', contactController.delete);
 server.delete('/api/alert', alertController.delete);
-server.get('/api/apps', appsController);
-server.get('/api/ips', ipsController);
-server.get('/api/servers', serversController);
-server.get('/api/alerts', alertsController);
-server.get('/api/contacts', contactsController);
+
+server.get('/api/apps', appController.find);
+server.get('/api/ips', ipController);
+server.get('/api/servers', serverController);
+server.get('/api/alerts', alertController.find);
+server.get('/api/contacts', contactController.find);
 server.get('/api/dashboard', dashboardController);
 server.get('/api/token', tokenController);
-server.post('/api/user/login', userController.login);
 
 /**
  * Check if Next.JS is ready to handle requests
@@ -272,6 +271,9 @@ mongodb.init().then(() => {
     }, 300000); // 5 minutes
 });
 
+/**
+ * Catch Next.JS Errors
+ */
 handler.ready.catch(err => {
     console.error(err);
     process.exit(1);

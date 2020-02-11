@@ -14,6 +14,20 @@ const alertCollection = require('../../collections/Alert');
  */
 module.exports = {
     /**
+     * Get all contacts
+     *
+     * @param req
+     * @param res
+     * @return {Promise<void>}
+     */
+    find: async (req, res) => {
+        res.json({
+            success: true,
+            contacts: await contactCollection.find()
+        });
+    },
+
+    /**
      * Create a new Contact
      *
      * @param req
