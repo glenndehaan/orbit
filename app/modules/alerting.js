@@ -147,7 +147,6 @@ module.exports = {
      * @return {Promise<unknown>}
      */
     send: (type, app) => {
-        //eslint-disable-next-line
         return new Promise(async (resolve) => {
             let query = {
                 alert: type

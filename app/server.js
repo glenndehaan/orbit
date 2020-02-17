@@ -37,28 +37,31 @@ let subcommand = false;
 const dev = process.env.NODE_ENV !== 'production';
 const sendAlerts = {};
 
+/**
+ * Init logger and set log level
+ */
+global.log = require('simple-node-logger').createSimpleLogger({
+    logFilePath: dev ? `${__dirname}/log/orbit.log` : `${process.env.SNAP_COMMON}/orbit.log`,
+    timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
+});
+global.log.setLevel(config.log.level);
+
+/**
+ * Catch unhandled promise rejections
+ */
+process.on('unhandledRejection', reason => {
+    global.log.error(reason);
+});
+
+/**
+ * Runs the Express server
+ */
 const runServer = () => {
     /**
      * Define Next.JS variables
      */
     let nextReady = false;
     const server = express();
-
-    /**
-     * Init logger and set log level
-     */
-    global.log = require('simple-node-logger').createSimpleLogger({
-        logFilePath: dev ? `${__dirname}/log/orbit.log` : `${process.env.SNAP_COMMON}/orbit.log`,
-        timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
-    });
-    global.log.setLevel(config.log.level);
-
-    /**
-     * Catch unhandled promise rejections
-     */
-    process.on('unhandledRejection', reason => {
-        global.log.error(reason);
-    });
 
     /**
      * Create Next.JS app
@@ -302,17 +305,17 @@ program
 program
     .command('backup')
     .description('exports the orbit database for migration/backup')
-    .action(() => {
+    .action(async () => {
         subcommand = true;
-        //todo Add function
+        await mongodb.export();
     });
 
 program
     .command('restore')
     .description('imports an orbit database backup')
-    .action(() => {
+    .action(async () => {
         subcommand = true;
-        //todo Add function
+        await mongodb.import();
     });
 
 /**
