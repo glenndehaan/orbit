@@ -104,5 +104,36 @@ module.exports = {
         res.json({
             status: 'OK'
         });
+    },
+
+    /**
+     * Remove an App
+     *
+     * @param req
+     * @param res
+     * @return {Promise<void>}
+     */
+    delete: async (req, res) => {
+        const app = await appCollection.findOne({
+            id: req.query.id
+        });
+
+        const apps = await appCollection.find({
+            'os.hostname': app.os.hostname
+        });
+
+        if(apps.length < 1) {
+            await serverCollection.deleteMany({
+                hostname: app.os.hostname
+            });
+        }
+
+        await appCollection.deleteOne({
+            id: req.query.id
+        });
+
+        res.json({
+            success: true
+        });
     }
 };

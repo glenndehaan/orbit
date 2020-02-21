@@ -172,6 +172,7 @@ const runServer = () => {
     server.post('/api/contact', contactController.create);
     server.post('/api/alert', alertController.create);
 
+    server.delete('/api/app', appController.delete);
     server.delete('/api/contact', contactController.delete);
     server.delete('/api/alert', alertController.delete);
 

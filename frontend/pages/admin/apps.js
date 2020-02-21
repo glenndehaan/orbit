@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
 
+import Trash from '../../components/icons/Trash';
 import Settings from '../../components/icons/Settings';
 import Modal from '../../components/Modal';
 import Welcome from '../../components/Welcome';
 
 import strings from '../../utils/strings';
+import fetch from "isomorphic-unfetch";
+import Router from "next/router";
 
 export default class Apps extends Component {
     /**
@@ -48,6 +51,29 @@ export default class Apps extends Component {
                 public: {}
             }
         });
+    }
+
+    /**
+     * Remove an app
+     *
+     * @param id
+     */
+    delete(id) {
+        fetch(`${this.props.application.host}/api/app?id=${id}`, {
+            credentials: 'same-origin',
+            method: 'DELETE',
+            headers: {
+                'token': this.props.application.user.token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then(() => {
+                Router.push('/admin/apps');
+            })
+            .catch((error) => {
+                console.error('API Error:', error);
+            });
     }
 
     /**
@@ -250,6 +276,7 @@ export default class Apps extends Component {
                                 <th>Client</th>
                                 <th>Last Seen</th>
                                 <th/>
+                                <th/>
                             </tr>
                         </thead>
                         <tbody>
@@ -268,6 +295,7 @@ export default class Apps extends Component {
                                         <td>{app.client}</td>
                                         <td>{strings.timeSince(Math.round(app.updated)).text}</td>
                                         <td><Settings height="20px" onClick={() => this.openModal(app)}/></td>
+                                        <td><Trash height="20px" color="#dc3545" onClick={() => this.delete(app.id)}/></td>
                                     </tr>
                                 )
                             })}
