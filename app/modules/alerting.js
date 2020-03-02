@@ -29,6 +29,11 @@ const email = (type, alert, contact, app) => {
         let title = 'Orbit: ';
         let color = 'black';
 
+        if(type === "test") {
+            title += "Test";
+            message = `<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Orbit test message!</p>`;
+        }
+
         if(type === "app-offline") {
             title += "App Offline";
             color = 'red';
@@ -75,6 +80,11 @@ const pushover = (type, alert, contact, app) => {
     let message = '';
     let title = 'Orbit: ';
 
+    if(type === "test") {
+        title += "Test";
+        message = `Orbit test message!`;
+    }
+
     if(type === "app-offline") {
         title += "App Offline";
         message = `An app has gone offline: <br/><br/><b> Name:</b> ${app.project}<br/><b> Server:</b> ${app.os.hostname}<br/><b> IP:</b> ${app.public.ip} (${app.public.country_code})<br/><b> Client:</b> ${app.client}`;
@@ -109,6 +119,10 @@ const pushover = (type, alert, contact, app) => {
  */
 const slack = (type, alert, contact, app) => {
     let message = '';
+
+    if(type === "test") {
+        message = `Orbit test message!`;
+    }
 
     if(type === "app-offline") {
         message = `An app has gone offline:\n\n*Name:* ${app.project}\n*Server:* ${app.os.hostname}\n*IP:* ${app.public.ip} (${app.public.country_code})\n*Client:* ${app.client}`;
@@ -148,6 +162,30 @@ module.exports = {
      */
     send: (type, app) => {
         return new Promise(async (resolve) => {
+            if(type === "test") {
+                const contact = await contactCollection.findOne({
+                    id: app.id
+                });
+
+                if(contact.service === "email") {
+                    global.log.info(`[ALERT] Send to email! ID: ${contact.id}`);
+                    await email(type, {}, contact, {});
+                }
+
+                if(contact.service === "pushover") {
+                    global.log.info(`[ALERT] Send to pushover! ID: ${contact.id}`);
+                    await pushover(type, {}, contact, {});
+                }
+
+                if(contact.service === "slack") {
+                    global.log.info(`[ALERT] Send to slack! ID: ${contact.id}`);
+                    await slack(type, {}, contact, {});
+                }
+
+                resolve();
+                return;
+            }
+
             let query = {
                 alert: type
             };

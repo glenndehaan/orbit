@@ -4,6 +4,7 @@ import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
 import Trash from '../../components/icons/Trash';
+import Test from '../../components/icons/Test';
 import Modal from '../../components/Modal';
 
 export default class Contacts extends Component {
@@ -149,6 +150,29 @@ export default class Contacts extends Component {
     }
 
     /**
+     * Test an alert
+     *
+     * @param id
+     */
+    test(id) {
+        fetch(`${this.props.application.host}/api/contact?id=${id}`, {
+            credentials: 'same-origin',
+            method: 'GET',
+            headers: {
+                'token': this.props.application.user.token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then(() => {
+                Router.push('/admin/contacts');
+            })
+            .catch((error) => {
+                console.error('API Error:', error);
+            });
+    }
+
+    /**
      * Remove an alert
      *
      * @param id
@@ -247,6 +271,7 @@ export default class Contacts extends Component {
                                 <th>Name</th>
                                 <th>Service</th>
                                 <th/>
+                                <th/>
                             </tr>
                         </thead>
                         <tbody>
@@ -254,6 +279,7 @@ export default class Contacts extends Component {
                                 <tr key={key}>
                                     <td>{contact.name}</td>
                                     <td>{contact.service}</td>
+                                    <td><Test height="20px" color="#28a745" title="Test Contact" onClick={() => this.test(contact.id)}/></td>
                                     <td><Trash height="20px" color="#dc3545" onClick={() => this.delete(contact.id)}/></td>
                                 </tr>
                             ))}

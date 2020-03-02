@@ -8,6 +8,7 @@ const uuidv4 = require('uuid/v4');
  */
 const contactCollection = require('../../collections/Contact');
 const alertCollection = require('../../collections/Alert');
+const alerting = require('../../modules/alerting');
 
 /**
  * Export all contact functions
@@ -24,6 +25,23 @@ module.exports = {
         res.json({
             success: true,
             contacts: await contactCollection.find()
+        });
+    },
+
+    /**
+     * Send a test notification to a contact
+     *
+     * @param req
+     * @param res
+     * @return {Promise<void>}
+     */
+    test: async (req, res) => {
+        await alerting.send("test", {
+            id: req.query.id
+        });
+
+        res.json({
+            success: true
         });
     },
 

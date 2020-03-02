@@ -167,6 +167,7 @@ const runServer = () => {
     /**
      * Add api endpoints
      */
+    // Functional
     server.post('/api/user/login', userController.login);
     server.post('/api/app', appController.create);
     server.post('/api/contact', contactController.create);
@@ -176,6 +177,9 @@ const runServer = () => {
     server.delete('/api/contact', contactController.delete);
     server.delete('/api/alert', alertController.delete);
 
+    server.get('/api/contact', contactController.test);
+
+    // Data
     server.get('/api/apps', appController.find);
     server.get('/api/ips', ipController);
     server.get('/api/servers', serverController);
