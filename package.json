@@ -57,7 +57,7 @@
   ],
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.1.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
     "chartist": "^0.11.4",
@@ -72,17 +72,17 @@
     "instant-listen": "^0.1.0",
     "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
-    "memorystore": "^1.6.1",
-    "mongoose": "^5.8.11",
-    "next": "^9.2.1",
+    "memorystore": "^1.6.2",
+    "mongoose": "^5.9.2",
+    "next": "^9.2.2",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.1",
-    "nodemailer": "^6.4.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "rimraf": "^3.0.1",
+    "nodemailer": "^6.4.4",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "rimraf": "^3.0.2",
     "simple-node-logger": "^18.12.24",
-    "uuid": "^3.4.0"
+    "uuid": "^7.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.1"
