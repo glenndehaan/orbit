@@ -118,6 +118,10 @@ module.exports = {
             id: req.query.id
         });
 
+        await appCollection.deleteOne({
+            id: req.query.id
+        });
+
         const apps = await appCollection.find({
             'os.hostname': app.os.hostname
         });
@@ -127,10 +131,6 @@ module.exports = {
                 hostname: app.os.hostname
             });
         }
-
-        await appCollection.deleteOne({
-            id: req.query.id
-        });
 
         res.json({
             success: true
