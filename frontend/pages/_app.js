@@ -93,7 +93,6 @@ class MyApp extends App {
 
         if (ctx.pathname !== "/" && ctx.pathname !== "/admin/login" && ctx.pathname !== "/_error") {
             const apiPath = ctx.pathname.replace('/admin/', '');
-            console.log('apiPath', apiPath);
 
             pageProps.pageData = await getPageData(pageProps.application.host, apiPath, pageProps.application.user.token);
             pageProps.token = await getAppToken(pageProps.application.host, pageProps.application.user.token);
@@ -114,8 +113,6 @@ class MyApp extends App {
      */
     render() {
         const {Component, pageProps, router} = this.props;
-
-        console.log('pageProps', pageProps);
 
         if (router.pathname === "/") {
             return (

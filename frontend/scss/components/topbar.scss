@@ -25,4 +25,20 @@
 .navbar-nav {
   height: 40px;
   line-height: 40px;
+
+  margin-left: auto;
+}
+
+.navbar {
+  justify-content: initial;
+}
+
+@media (max-width: 575px) {
+  .navbar {
+    justify-content: space-between;
+  }
+
+  .navbar-nav {
+    margin-left: initial;
+  }
 }

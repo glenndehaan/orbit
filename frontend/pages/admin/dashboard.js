@@ -123,34 +123,32 @@ export default class Dashboard extends Component {
                         </Link>
                     </div>
                     <div className="col-sm">
-                        <div className="col-sm">
-                            <h4>Offline Apps</h4>
-                            <div className="table-responsive">
-                                <table className="table table-striped table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Server</th>
-                                            <th>IP</th>
-                                            <th>Last Seen</th>
+                        <h4>Offline Apps</h4>
+                        <div className="table-responsive">
+                            <table className="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Server</th>
+                                        <th>IP</th>
+                                        <th>Last Seen</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.props.pageData.topOffline.map((app, key) => (
+                                        <tr key={key}>
+                                            <td>{app.project}</td>
+                                            <td>{app.os.hostname}</td>
+                                            <td>{app.public.ip} ({app.public.country_code})</td>
+                                            <td>{strings.timeSince(Math.round(app.updated)).text}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.props.pageData.topOffline.map((app, key) => (
-                                            <tr key={key}>
-                                                <td>{app.project}</td>
-                                                <td>{app.os.hostname}</td>
-                                                <td>{app.public.ip} ({app.public.country_code})</td>
-                                                <td>{strings.timeSince(Math.round(app.updated)).text}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <Link href="/admin/apps">
-                                <a>More</a>
-                            </Link>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
+                        <Link href="/admin/apps">
+                            <a>More</a>
+                        </Link>
                     </div>
                 </div>
                 <div className="row">

@@ -9,3 +9,16 @@
 .test-icon {
   background: none;
 }
+
+.list-icon {
+  background: none;
+
+  margin: 0 1rem 0 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .list-icon {
+    display: none;
+  }
+}

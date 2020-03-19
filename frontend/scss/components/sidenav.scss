@@ -4,3 +4,31 @@
     max-width: 160px;
   }
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: block !important;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-25%);
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, visibility 0.2s linear 0s;
+  }
+
+  body {
+    &.mobile-menu-open {
+      overflow: hidden;
+
+      .sidebar {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0%);
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .sidebar {
+    padding: 105px 0 0;
+  }
+}
