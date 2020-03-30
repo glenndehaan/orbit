@@ -1,14 +1,9 @@
 /**
- * Import vendor modules
- */
-const withSass = require('@zeit/next-sass');
-
-/**
  * Check if we are using the dev version
  */
 const dev = process.env.NODE_ENV !== 'production';
 
-module.exports = withSass({
+module.exports = {
     distDir: '../_next',
     poweredByHeader: false,
     webpack(config) {
@@ -27,4 +22,4 @@ module.exports = withSass({
 
         return config;
     }
-});
+};

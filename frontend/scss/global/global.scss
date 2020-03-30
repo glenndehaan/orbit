@@ -1,6 +1,8 @@
 @media (min-width: 768px) {
   main {
-    flex: 0 0 calc(100% - 160px) !important;
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    flex-basis: calc(100% - 160px) !important;
     max-width: calc(100% - 160px) !important;
   }
 }

@@ -11,8 +11,10 @@
   z-index: 0;
 }
 
-.modal-dialog {
-  max-width: calc(100% - 200px);
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: calc(100% - 200px);
+  }
 }
 
 .modal-body {
